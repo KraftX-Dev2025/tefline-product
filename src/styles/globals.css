@@ -1,0 +1,125 @@
+@import "tailwindcss";
+
+@theme {
+    /* Base theme colors using OKLCH color format */
+    --color-background: oklch(0.1 0.03 250);
+    --color-foreground: oklch(0.98 0.02 240);
+
+    --color-card: oklch(0.15 0.04 250);
+    --color-card-foreground: oklch(0.98 0.02 240);
+
+    --color-popover: oklch(0.15 0.04 250);
+    --color-popover-foreground: oklch(0.98 0.02 240);
+
+    --color-primary: oklch(0.7 0.2 200);
+    --color-primary-foreground: oklch(0.1 0.03 250);
+
+    --color-secondary: oklch(0.2 0.05 260);
+    --color-secondary-foreground: oklch(0.98 0.02 240);
+
+    --color-muted: oklch(0.3 0.05 260);
+    --color-muted-foreground: oklch(0.85 0.03 240);
+
+    --color-accent: oklch(0.7 0.2 195);
+    --color-accent-foreground: oklch(0.1 0.03 250);
+
+    --color-destructive: oklch(0.35 0.18 25);
+    --color-destructive-foreground: oklch(0.98 0.02 240);
+
+    --color-border: oklch(0.25 0.04 250);
+    --color-input: oklch(0.25 0.04 250);
+    --color-ring: oklch(0.7 0.2 200);
+
+    --rounded-lg: 0.5rem;
+
+    /* Animation easings */
+    --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+    --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+}
+
+@layer base {
+    * {
+        border-color: var(--color-border);
+    }
+    body {
+        background-color: var(--color-background);
+        color: var(--color-foreground);
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+
+/* Custom utilities */
+@utility gradient-text {
+    color: transparent;
+    background-clip: text;
+    background-image: linear-gradient(
+        to right,
+        var(--color-accent),
+        var(--color-primary)
+    );
+}
+
+@utility glass-effect {
+    background-color: color-mix(
+        in oklch,
+        var(--color-secondary),
+        transparent 30%
+    );
+    backdrop-filter: blur(8px);
+}
+
+@utility task-card {
+    transition-property: all;
+    transition-duration: 300ms;
+    &:hover {
+        box-shadow: 0 10px 15px -3px color-mix(in oklch, var(--color-accent), transparent
+                    90%);
+    }
+}
+
+@utility checkmark-icon {
+    color: var(--color-accent);
+    transition-property: color;
+    transition-duration: 300ms;
+}
+
+@utility animate-fade-in {
+    opacity: 0;
+    animation: fade-in 500ms var(--ease-snappy) forwards;
+}
+
+@keyframes fade-in {
+    to {
+        opacity: 1;
+    }
+}
+
+@utility animate-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slide-up 500ms var(--ease-snappy) forwards;
+}
+
+@keyframes slide-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@utility chat-bubble {
+    border-radius: var(--rounded-lg);
+    padding-inline: 1rem;
+    padding-block: 0.75rem;
+    max-width: 80%;
+}
+
+@utility user-chat-bubble {
+    background-color: color-mix(in oklch, var(--color-accent), transparent 80%);
+    margin-left: auto;
+}
+
+@utility bot-chat-bubble {
+    background-color: var(--color-secondary);
+    margin-right: auto;
+}
