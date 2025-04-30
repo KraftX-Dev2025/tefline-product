@@ -89,7 +89,7 @@ export default function OnboardingForm() {
         } else {
             setCurrentResponse(question.type === "multiSelect" ? [] : "");
         }
-    }, [currentStep, question.id]);
+    }, [currentStep, question.id, question.type, responses]);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCurrentResponse(e.target.value);
