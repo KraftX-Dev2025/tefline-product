@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, FileText } from "lucide-react"; // FileText is now correctly imported here
 import {
     Card,
     CardContent,
@@ -13,6 +13,10 @@ import { Button } from "@/components/ui/button";
 import { Resource } from "@/lib/types";
 import { LucideIcon } from "lucide-react";
 import dynamic from "next/dynamic";
+import dynamicIconImports from "lucide-react/dynamicIconImports";
+
+// Define the IconName type based on the keys of dynamicIconImports
+type IconName = keyof typeof dynamicIconImports;
 
 interface ResourceCardProps {
     resource: Resource;
@@ -20,17 +24,17 @@ interface ResourceCardProps {
 }
 
 export default function ResourceCard({ resource, index }: ResourceCardProps) {
-    // Dynamically import icons to match the icon name from resource data
-    const Icon = dynamic(
-        () =>
-            import("lucide-react").then(
-                (mod) =>
-                    mod[
-                        resource.icon as keyof typeof import("lucide-react")
-                    ] as LucideIcon
-            ),
-        { ssr: false, loading: () => <div className="w-5 h-5" /> }
-    );
+    // Cast resource.icon to IconName and check if it's a valid key
+    const iconName = resource.icon as IconName;
+    const isValidIcon = iconName in dynamicIconImports;
+
+    // Dynamically import the specific icon component or use fallback
+    const Icon = isValidIcon
+        ? dynamic(dynamicIconImports[iconName], {
+              ssr: false,
+              loading: () => <div className="w-5 h-5" />,
+          })
+        : FileText; // Fallback to FileText icon if the icon name is invalid
 
     const cardVariants = {
         hidden: { opacity: 0, y: 20 },
