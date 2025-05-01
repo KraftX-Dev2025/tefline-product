@@ -1,32 +1,50 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
-import Link from "next/link";
+import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { createClient } from "@/utils/supabase/client";
 
 export default function ProfilePage() {
+    const supabase = createClient();
+
+    const [userName, setUserName] = useState<string | null>(null);
+
+    useEffect(() => {
+        const getUserData = async () => {
+            const {
+                data: { user },
+                error,
+            } = await supabase.auth.getUser();
+
+            if (user) {
+                const name =
+                    user.user_metadata?.name ||
+                    user.user_metadata?.full_name ||
+                    null;
+                setUserName(name);
+            } else {
+                console.error("No user found:", error);
+            }
+        };
+
+        getUserData();
+    }, []);
+
     return (
         <div className="min-h-screen bg-slate-950 text-slate-100">
             <div className="container mx-auto px-4 py-8">
-                {/* Profile Header */}
                 <div className="flex flex-col md:flex-row items-start md:items-center gap-6 mb-8">
-                    <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-cyan-400">
-                        <Image
-                            src="/api/placeholder/150/150"
-                            alt="Profile"
-                            fill
-                            className="object-cover"
-                        />
+                    <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-cyan-400 bg-cyan-800 flex items-center justify-center text-white text-4xl font-bold">
+                        {userName ? userName.charAt(0).toUpperCase() : "?"}
                     </div>
 
                     <div className="flex-1">
                         <h1 className="text-2xl font-bold text-cyan-300">
-                            Alex Thompson
+                            {userName || "Loading..."}
                         </h1>
+
                         <p className="text-slate-400">
                             Wellness Journey: 3 months
                         </p>
@@ -44,9 +62,9 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
-                    <Button className="bg-cyan-600 hover:bg-cyan-700 text-white">
+                    {/* <Button className="bg-cyan-600 hover:bg-cyan-700 text-white">
                         Edit Profile
-                    </Button>
+                    </Button> */}
                 </div>
 
                 {/* Wellness Summary */}
@@ -64,7 +82,6 @@ export default function ProfilePage() {
                                 <Progress
                                     value={65}
                                     className="h-2 bg-slate-700"
-                                    indicatorClassName="bg-cyan-500"
                                 />
                                 <span className="text-sm font-medium">65%</span>
                             </div>
@@ -78,7 +95,6 @@ export default function ProfilePage() {
                                 <Progress
                                     value={40}
                                     className="h-2 bg-slate-700"
-                                    indicatorClassName="bg-cyan-500"
                                 />
                                 <span className="text-sm font-medium">40%</span>
                             </div>
@@ -92,7 +108,6 @@ export default function ProfilePage() {
                                 <Progress
                                     value={78}
                                     className="h-2 bg-slate-700"
-                                    indicatorClassName="bg-cyan-500"
                                 />
                                 <span className="text-sm font-medium">78</span>
                             </div>
@@ -109,7 +124,7 @@ export default function ProfilePage() {
                         >
                             Wellness Journey
                         </TabsTrigger>
-                        <TabsTrigger
+                        {/* <TabsTrigger
                             value="resources"
                             className="data-[state=active]:bg-slate-800 data-[state=active]:text-cyan-300"
                         >
@@ -120,18 +135,16 @@ export default function ProfilePage() {
                             className="data-[state=active]:bg-slate-800 data-[state=active]:text-cyan-300"
                         >
                             AI Tool History
-                        </TabsTrigger>
+                        </TabsTrigger> */}
                     </TabsList>
 
                     <TabsContent value="journey" className="space-y-4">
-                        {/* Journey Timeline */}
                         <Card className="bg-slate-900 border-slate-800 p-6">
                             <h3 className="text-lg font-medium text-cyan-300 mb-4">
                                 Your Journey
                             </h3>
 
                             <div className="space-y-6">
-                                {/* Timeline Item */}
                                 {[1, 2, 3].map((item) => (
                                     <div
                                         key={item}
@@ -154,8 +167,7 @@ export default function ProfilePage() {
                         </Card>
                     </TabsContent>
 
-                    <TabsContent value="resources" className="space-y-4">
-                        {/* Saved Resources Grid */}
+                    {/* <TabsContent value="resources" className="space-y-4">
                         <Card className="bg-slate-900 border-slate-800 p-6">
                             <h3 className="text-lg font-medium text-cyan-300 mb-4">
                                 Saved Resources
@@ -197,7 +209,6 @@ export default function ProfilePage() {
                     </TabsContent>
 
                     <TabsContent value="tools" className="space-y-4">
-                        {/* AI Tools Usage */}
                         <Card className="bg-slate-900 border-slate-800 p-6">
                             <h3 className="text-lg font-medium text-cyan-300 mb-4">
                                 AI Tool Sessions
@@ -254,7 +265,7 @@ export default function ProfilePage() {
                                 ))}
                             </div>
                         </Card>
-                    </TabsContent>
+                    </TabsContent> */}
                 </Tabs>
             </div>
         </div>
