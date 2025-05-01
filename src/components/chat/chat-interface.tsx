@@ -25,6 +25,7 @@ export default function ChatInterface() {
     const [isLoading, setIsLoading] = useState(false);
     const messageEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
+    const messageContainerRef = useRef<HTMLDivElement>(null);
 
     // Load messages from localStorage
     useEffect(() => {
@@ -48,9 +49,11 @@ export default function ChatInterface() {
         }
     }, []);
 
-    // Scroll to bottom when messages change
     useEffect(() => {
-        messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+        const container = messageContainerRef.current;
+        if (container) {
+            container.scrollTop = container.scrollHeight;
+        }
     }, [messages]);
 
     const sendMessage = async (content: string) => {
@@ -167,7 +170,10 @@ export default function ChatInterface() {
             </div>
 
             {/* Chat Messages */}
-            <div className="flex-grow overflow-y-auto p-4 space-y-4">
+            <div
+                ref={messageContainerRef}
+                className="flex-grow overflow-y-auto p-4 space-y-4"
+            >
                 <AnimatePresence initial={false}>
                     {messages.map((message) => (
                         <motion.div

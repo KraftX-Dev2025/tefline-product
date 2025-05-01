@@ -302,7 +302,7 @@ export default function LoginPage() {
                                 <Sparkles className="w-4 h-4 mr-2" />
                                 <span>Secure Login</span>
                             </div>
-                            <h1 className="text-3xl font-bold text-teal-700 bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text text-transparent">
+                            <h1 className="text-3xl font-bold text-teal-700 bg-gradient-to-r from-teal-600 to-teal-400 bg-clip-text">
                                 Welcome to Tefline
                             </h1>
                             <p className="text-slate-600 mt-2 max-w-sm">
