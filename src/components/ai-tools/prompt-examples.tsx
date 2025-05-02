@@ -41,23 +41,23 @@ export default function PromptExamples({
                     animate="visible"
                     className="relative group"
                 >
-                    <div className="flex border border-border/60 rounded-md overflow-hidden">
-                        <div className="bg-secondary/30 p-2 flex items-center justify-center">
+                    <div className="flex border border-gray-200 rounded-md overflow-hidden">
+                        <div className="bg-gray-50 p-2 flex items-center justify-center">
                             <MessageSquare
                                 size={16}
-                                className="text-muted-foreground"
+                                className="text-gray-400"
                             />
                         </div>
 
-                        <div className="flex-grow p-2 text-xs font-normal">
+                        <div className="flex-grow p-2 text-xs font-normal text-gray-600">
                             {prompt}
                         </div>
 
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-card opacity-0 group-hover:opacity-100 flex items-center justify-end pr-2 transition-opacity">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-white opacity-0 group-hover:opacity-100 flex items-center justify-end pr-2 transition-opacity">
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className="h-7 px-2 bg-primary/10"
+                                className="h-7 px-2 bg-teal-50 text-teal-600 hover:bg-teal-100"
                                 asChild
                             >
                                 <a
@@ -77,12 +77,12 @@ export default function PromptExamples({
             ))}
 
             {hasMore && (
-                <div className="text-xs text-muted-foreground pt-1 pl-2">
+                <div className="text-xs text-gray-400 pt-1 pl-2">
                     {prompts.length - maxDisplayed} more example(s) available...
                 </div>
             )}
 
-            <div className="text-xs text-muted-foreground mt-2 italic">
+            <div className="text-xs text-gray-400 mt-2 italic">
                 Click on any example to try it directly in the AI tool
             </div>
         </div>

@@ -1,125 +1,91 @@
 @import "tailwindcss";
 
-@theme {
-    /* Base theme colors using OKLCH color format */
-    --color-background: oklch(0.1 0.03 250);
-    --color-foreground: oklch(0.98 0.02 240);
+:root {
+  --background: 0 0% 100%;
+  --foreground: 220 10% 20%;
+  
+  --card: 0 0% 100%;
+  --card-foreground: 220 10% 20%;
+  
+  --popover: 0 0% 100%;
+  --popover-foreground: 220 10% 20%;
+  
+  --primary: 168 75% 64%;
+  --primary-foreground: 0 0% 100%;
+  
+  --secondary: 160 70% 94%;
+  --secondary-foreground: 165 70% 30%;
+  
+  --muted: 210 20% 97%;
+  --muted-foreground: 220 10% 45%;
+  
+  --accent: 168 75% 64%;
+  --accent-foreground: 0 0% 100%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  
+  --border: 220 13% 90%;
+  --input: 220 13% 90%;
+  --ring: 168 75% 64%;
+  
+  --radius: 0.5rem;
+}
 
-    --color-card: oklch(0.15 0.04 250);
-    --color-card-foreground: oklch(0.98 0.02 240);
-
-    --color-popover: oklch(0.15 0.04 250);
-    --color-popover-foreground: oklch(0.98 0.02 240);
-
-    --color-primary: oklch(0.7 0.2 200);
-    --color-primary-foreground: oklch(0.1 0.03 250);
-
-    --color-secondary: oklch(0.2 0.05 260);
-    --color-secondary-foreground: oklch(0.98 0.02 240);
-
-    --color-muted: oklch(0.3 0.05 260);
-    --color-muted-foreground: oklch(0.85 0.03 240);
-
-    --color-accent: oklch(0.7 0.2 195);
-    --color-accent-foreground: oklch(0.1 0.03 250);
-
-    --color-destructive: oklch(0.35 0.18 25);
-    --color-destructive-foreground: oklch(0.98 0.02 240);
-
-    --color-border: oklch(0.25 0.04 250);
-    --color-input: oklch(0.25 0.04 250);
-    --color-ring: oklch(0.7 0.2 200);
-
-    --rounded-lg: 0.5rem;
-
-    /* Animation easings */
-    --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
-    --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+.dark {
+  /* Keep dark theme variables as fallback if needed */
+  --background: 224 71% 4%;
+  --foreground: 213 31% 91%;
 }
 
 @layer base {
-    * {
-        border-color: var(--color-border);
-    }
-    body {
-        background-color: var(--color-background);
-        color: var(--color-foreground);
-        font-feature-settings: "rlig" 1, "calt" 1;
-    }
+  * {
+    @apply border-gray-200;
+  }
+  body {
+    @apply bg-white text-gray-800;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
 }
 
 /* Custom utilities */
-@utility gradient-text {
-    color: transparent;
-    background-clip: text;
-    background-image: linear-gradient(
-        to right,
-        var(--color-accent),
-        var(--color-primary)
-    );
+.gradient-text {
+  @apply text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-300;
 }
 
-@utility glass-effect {
-    background-color: color-mix(
-        in oklch,
-        var(--color-secondary),
-        transparent 30%
-    );
-    backdrop-filter: blur(8px);
+.task-card {
+  @apply transition-all duration-300;
 }
 
-@utility task-card {
-    transition-property: all;
-    transition-duration: 300ms;
-    &:hover {
-        box-shadow: 0 10px 15px -3px color-mix(in oklch, var(--color-accent), transparent
-                    90%);
-    }
+.task-card:hover {
+  @apply shadow-md;
 }
 
-@utility checkmark-icon {
-    color: var(--color-accent);
-    transition-property: color;
-    transition-duration: 300ms;
+.chat-bubble {
+  @apply rounded-md px-4 py-3 max-w-[80%];
 }
 
-@utility animate-fade-in {
-    opacity: 0;
-    animation: fade-in 500ms var(--ease-snappy) forwards;
+.user-chat-bubble {
+  @apply bg-teal-300 text-white ml-auto;
 }
 
-@keyframes fade-in {
-    to {
-        opacity: 1;
-    }
+.bot-chat-bubble {
+  @apply bg-gray-100 text-gray-800 mr-auto;
 }
 
-@utility animate-slide-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: slide-up 500ms var(--ease-snappy) forwards;
+/* Button styles */
+.btn-primary {
+  @apply bg-teal-300 hover:bg-teal-400 text-white;
 }
 
-@keyframes slide-up {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.btn-secondary {
+  @apply bg-white hover:bg-gray-50 text-gray-800 border border-gray-200;
 }
 
-@utility chat-bubble {
-    border-radius: var(--rounded-lg);
-    padding-inline: 1rem;
-    padding-block: 0.75rem;
-    max-width: 80%;
+.btn-tertiary {
+  @apply bg-teal-100 hover:bg-teal-200 text-teal-700;
 }
 
-@utility user-chat-bubble {
-    background-color: color-mix(in oklch, var(--color-accent), transparent 80%);
-    margin-left: auto;
-}
-
-@utility bot-chat-bubble {
-    background-color: var(--color-secondary);
-    margin-right: auto;
+.btn-gradient {
+  @apply bg-gradient-to-r from-teal-300 to-teal-400 text-white;
 }

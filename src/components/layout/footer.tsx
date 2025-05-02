@@ -59,7 +59,7 @@ export default function Footer() {
 
     return (
         <motion.footer
-            className="bg-card/50 border-t border-border mt-16"
+            className="bg-white border-t border-gray-200 mt-16"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -73,36 +73,36 @@ export default function Footer() {
                             href="/"
                             className="flex items-center space-x-2 mb-4"
                         >
-                            <span className="text-2xl font-bold gradient-text">
+                            <span className="text-2xl font-bold text-teal-500">
                                 Tefline
                             </span>
                         </Link>
-                        <p className="text-sm text-muted-foreground mb-6">
+                        <p className="text-sm text-gray-500 mb-6">
                             Your intelligent companion for wellness and
                             lifestyle medicine.
                         </p>
                         <div className="flex space-x-4">
                             <a
                                 href="#"
-                                className="text-muted-foreground hover:text-primary transition-colors"
+                                className="text-gray-400 hover:text-teal-500 transition-colors"
                             >
                                 <Mail size={18} />
                             </a>
                             <a
                                 href="#"
-                                className="text-muted-foreground hover:text-primary transition-colors"
+                                className="text-gray-400 hover:text-teal-500 transition-colors"
                             >
                                 <Instagram size={18} />
                             </a>
                             <a
                                 href="#"
-                                className="text-muted-foreground hover:text-primary transition-colors"
+                                className="text-gray-400 hover:text-teal-500 transition-colors"
                             >
                                 <Twitter size={18} />
                             </a>
                             <a
                                 href="#"
-                                className="text-muted-foreground hover:text-primary transition-colors"
+                                className="text-gray-400 hover:text-teal-500 transition-colors"
                             >
                                 <Github size={18} />
                             </a>
@@ -112,7 +112,7 @@ export default function Footer() {
                     {/* Link Columns */}
                     {footerSections.map((section) => (
                         <div key={section.title} className="col-span-1">
-                            <h3 className="font-medium text-foreground mb-4">
+                            <h3 className="font-medium text-gray-800 mb-4">
                                 {section.title}
                             </h3>
                             <ul className="space-y-3">
@@ -120,7 +120,7 @@ export default function Footer() {
                                     <li key={link.name}>
                                         <Link
                                             href={link.href}
-                                            className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                                            className="text-sm text-gray-500 hover:text-teal-500 transition-colors"
                                         >
                                             {link.name}
                                         </Link>
@@ -131,13 +131,13 @@ export default function Footer() {
                     ))}
                 </div>
 
-                <div className="border-t border-border mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
-                    <p className="text-sm text-muted-foreground text-center md:text-left mb-4 md:mb-0">
+                <div className="border-t border-gray-200 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
+                    <p className="text-sm text-gray-500 text-center md:text-left mb-4 md:mb-0">
                         &copy; {currentYear} Tefline. All rights reserved.
                     </p>
-                    <p className="text-sm text-muted-foreground flex items-center">
+                    <p className="text-sm text-gray-500 flex items-center">
                         Made with{" "}
-                        <Heart size={14} className="text-primary mx-1" /> for a
+                        <Heart size={14} className="text-teal-400 mx-1" /> for a
                         healthier lifestyle
                     </p>
                 </div>

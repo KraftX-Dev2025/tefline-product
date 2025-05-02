@@ -19,7 +19,7 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
         // Replace URLs with clickable links
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         let processedContent = content.replace(urlRegex, (url) => {
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-primary underline">${url}</a>`;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-teal-500 underline">${url}</a>`;
         });
 
         // Replace newlines with <br>
@@ -50,8 +50,8 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
             {/* Avatar for bot messages */}
             {!isUser && (
                 <div className="flex-shrink-0 mr-2">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Bot size={16} className="text-primary" />
+                    <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center">
+                        <Bot size={16} className="text-teal-500" />
                     </div>
                 </div>
             )}
@@ -59,10 +59,10 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
             <div className="max-w-[85%]">
                 <div
                     className={cn(
-                        "chat-bubble",
+                        "rounded-md",
                         isUser
-                            ? "user-chat-bubble rounded-tr-none"
-                            : "bot-chat-bubble rounded-tl-none"
+                            ? "bg-teal-300 text-white rounded-tr-none px-4 py-3"
+                            : "bg-gray-100 text-gray-800 rounded-tl-none px-4 py-3"
                     )}
                 >
                     <div
@@ -75,7 +75,7 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
 
                 <div
                     className={cn(
-                        "text-xs text-muted-foreground mt-1",
+                        "text-xs text-gray-400 mt-1",
                         isUser ? "text-right" : "text-left"
                     )}
                 >
@@ -86,8 +86,8 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
             {/* Avatar for user messages */}
             {isUser && (
                 <div className="flex-shrink-0 ml-2">
-                    <div className="w-8 h-8 rounded-full bg-accent/10 flex items-center justify-center">
-                        <User size={16} className="text-accent" />
+                    <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+                        <User size={16} className="text-gray-500" />
                     </div>
                 </div>
             )}

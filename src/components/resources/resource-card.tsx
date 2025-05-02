@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, FileText } from "lucide-react"; // FileText is now correctly imported here
+import { ExternalLink, FileText } from "lucide-react";
 import {
     Card,
     CardContent,
@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Resource } from "@/lib/types";
-import { LucideIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 import dynamicIconImports from "lucide-react/dynamicIconImports";
 
@@ -31,9 +30,9 @@ export default function ResourceCard({ resource, index }: ResourceCardProps) {
     // Dynamically import the specific icon component or use fallback
     const Icon = isValidIcon
         ? dynamic(dynamicIconImports[iconName], {
-              ssr: false,
-              loading: () => <div className="w-5 h-5" />,
-          })
+            ssr: false,
+            loading: () => <div className="w-5 h-5" />,
+        })
         : FileText; // Fallback to FileText icon if the icon name is invalid
 
     const cardVariants = {
@@ -56,17 +55,17 @@ export default function ResourceCard({ resource, index }: ResourceCardProps) {
             viewport={{ once: true }}
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
-            <Card className="h-full flex flex-col bg-card/70 overflow-hidden backdrop-blur-sm task-card">
+            <Card className="h-full flex flex-col bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
                 <CardHeader>
                     <div className="flex items-center space-x-2 mb-2">
-                        <div className="p-2 rounded-full bg-primary/10 text-primary">
+                        <div className="p-2 rounded-full bg-teal-50 text-teal-500">
                             <Icon size={20} />
                         </div>
-                        <CardTitle className="text-xl">
+                        <CardTitle className="text-xl text-gray-800">
                             {resource.title}
                         </CardTitle>
                     </div>
-                    <CardDescription>{resource.description}</CardDescription>
+                    <CardDescription className="text-gray-500">{resource.description}</CardDescription>
                 </CardHeader>
 
                 <CardContent className="flex-grow">
@@ -75,9 +74,9 @@ export default function ResourceCard({ resource, index }: ResourceCardProps) {
 
                 <CardFooter className="pt-2 pb-4">
                     <Button
-                        variant="glass"
+                        variant="outline"
                         size="sm"
-                        className="w-full"
+                        className="w-full border-gray-200 hover:bg-teal-50 hover:text-teal-600"
                         asChild
                     >
                         <a
