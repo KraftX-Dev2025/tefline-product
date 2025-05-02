@@ -27,7 +27,7 @@ export default function DriveLink({
                 </div>
 
                 <div className="flex-grow">
-                    <h3 className="text-lg font-medium text-gray-800 mb-1">
+                    <h3 className="text-lg font-medium text-teal-500 mb-1">
                         {searchTerm
                             ? `Google Drive: ${searchTerm}`
                             : "Google Drive Resources"}

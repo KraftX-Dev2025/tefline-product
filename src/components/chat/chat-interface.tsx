@@ -151,7 +151,7 @@ export default function ChatInterface() {
                         <Sparkles size={18} className="text-teal-500" />
                     </div>
                     <div>
-                        <h3 className="font-medium text-gray-800">AI Guide</h3>
+                        <h3 className="font-medium text-teal-500">AI Guide</h3>
                         <p className="text-xs text-gray-500">
                             Your wellness assistant
                         </p>

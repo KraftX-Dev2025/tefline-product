@@ -85,7 +85,7 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
                             {/* Render the dynamically loaded component or the fallback */}
                             <IconComponent size={24} />
                         </div>
-                        <CardTitle className="text-2xl text-gray-800">
+                        <CardTitle className="text-2xl text-teal-500">
                             {tool.title}
                         </CardTitle>
                     </div>

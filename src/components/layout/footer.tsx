@@ -112,7 +112,7 @@ export default function Footer() {
                     {/* Link Columns */}
                     {footerSections.map((section) => (
                         <div key={section.title} className="col-span-1">
-                            <h3 className="font-medium text-gray-800 mb-4">
+                            <h3 className="font-medium text-teal-500 mb-4">
                                 {section.title}
                             </h3>
                             <ul className="space-y-3">

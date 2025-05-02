@@ -121,7 +121,7 @@ export default function AIToolsPage() {
                                 </div>
 
                                 <div className="flex-grow">
-                                    <h2 className="text-2xl font-bold mb-2">
+                                    <h2 className="text-2xl font-bold mb-2 text-teal-500">
                                         Enhance Your Wellness with AI
                                     </h2>
                                     <p className="text-muted-foreground">
@@ -195,7 +195,7 @@ export default function AIToolsPage() {
                                     <div className="p-2 rounded-full bg-accent/10 text-accent">
                                         <item.icon size={20} />
                                     </div>
-                                    <h3 className="text-lg font-medium">
+                                    <h3 className="text-lg font-medium text-teal-500">
                                         {item.title}
                                     </h3>
                                 </div>
@@ -216,10 +216,10 @@ export default function AIToolsPage() {
                 >
                     <Card className="bg-card/30 backdrop-blur-sm border-border">
                         <CardContent className="p-6">
-                            <h3 className="text-lg font-medium mb-4 flex items-center">
+                            <h3 className="text-lg font-medium mb-4 flex items-center text-teal-500">
                                 <CheckCircle
                                     size={18}
-                                    className="mr-2 text-primary"
+                                    className="mr-2 text-primary text-teal-500"
                                 />
                                 Tips for Getting the Best Results
                             </h3>

@@ -61,7 +61,7 @@ export default function ResourceCard({ resource, index }: ResourceCardProps) {
                         <div className="p-2 rounded-full bg-teal-50 text-teal-500">
                             <Icon size={20} />
                         </div>
-                        <CardTitle className="text-xl text-gray-800">
+                        <CardTitle className="text-xl text-teal-500">
                             {resource.title}
                         </CardTitle>
                     </div>
