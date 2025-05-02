@@ -7,10 +7,25 @@ import HeroSection from "@/components/layout/hero-section";
 import OnboardingForm from "@/components/onboarding/onboarding-form";
 import { getFromLocalStorage } from "@/lib/utils";
 import { UserProfile } from "@/lib/types";
+import { createClient } from "@/utils/supabase/client";
 
 export default function OnboardingPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            if (!session) {
+                router.push("/login");
+            }
+        };
+        checkSession();
+    }, [router]);
 
     useEffect(() => {
         // Check if user has already completed onboarding

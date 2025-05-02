@@ -5,11 +5,26 @@ import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function ProfilePage() {
     const supabase = createClient();
-
+    const router = useRouter();
     const [userName, setUserName] = useState<string | null>(null);
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            if (!session) {
+                router.push("/login");
+            }
+        };
+        checkSession();
+    }, [router]);
 
     useEffect(() => {
         const getUserData = async () => {

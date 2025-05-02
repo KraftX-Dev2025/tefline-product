@@ -277,11 +277,10 @@ export default function OnboardingForm() {
                                     {question.options?.map((option, index) => (
                                         <label
                                             key={index}
-                                            className={`flex items-center space-x-3 p-3 rounded-md border cursor-pointer transition-colors ${
-                                                currentResponse === option
+                                            className={`flex items-center space-x-3 p-3 rounded-md border cursor-pointer transition-colors ${currentResponse === option
                                                     ? "bg-primary/10 border-primary/50"
                                                     : "bg-secondary/30 border-secondary/40 hover:bg-secondary/40"
-                                            }`}
+                                                }`}
                                         >
                                             <input
                                                 type="radio"

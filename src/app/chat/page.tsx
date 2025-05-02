@@ -10,8 +10,26 @@ import { Button } from "@/components/ui/button";
 import { getFromLocalStorage, saveToLocalStorage } from "@/lib/utils";
 import { SUGGESTED_CHATBOT_PROMPTS } from "@/constants/chatbot-prompts";
 import { AI_TOOLS } from "@/constants/ai-tools";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function ChatPage() {
+    const router = useRouter();
+    
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            if (!session) {
+                router.push("/login");
+            }
+        };
+        checkSession();
+    }, [router]);
+
     // Mark chat task as completed when visiting this page
     useEffect(() => {
         const tasks = getFromLocalStorage("tasks", []);

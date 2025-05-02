@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Search, FileText, Info } from "lucide-react";
 import HeroSection from "@/components/layout/hero-section";
@@ -15,8 +15,11 @@ import {
     RESOURCE_SEARCH_TIPS,
 } from "@/constants/resources";
 import { ResourceCategory } from "@/lib/types";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function ResourcesPage() {
+    const router = useRouter();
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedCategory, setSelectedCategory] = useState<
         ResourceCategory | "all"
@@ -52,6 +55,20 @@ export default function ResourcesPage() {
             },
         },
     };
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            if (!session) {
+                router.push("/login");
+            }
+        };
+        checkSession();
+    }, [router]);
 
     return (
         <>

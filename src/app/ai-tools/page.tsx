@@ -16,9 +16,26 @@ import AIToolCard from "@/components/ai-tools/ai-tool-card";
 import { AI_TOOLS, AI_TOOL_USAGE_TIPS } from "@/constants/ai-tools";
 import { getFromLocalStorage, saveToLocalStorage } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { createClient } from "@/utils/supabase/client";
+import { useRouter } from "next/navigation";
 
 export default function AIToolsPage() {
     const [completedTools, setCompletedTools] = useState<string[]>([]);
+    const router = useRouter();
+
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            if (!session) {
+                router.push("/login");
+            }
+        };
+        checkSession();
+    }, [router]);
 
     useEffect(() => {
         // Load completed tools from localStorage
