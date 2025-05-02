@@ -6,6 +6,7 @@ import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function ProfilePage() {
     const supabase = createClient();
@@ -47,6 +48,17 @@ export default function ProfilePage() {
         getUserData();
     }, []);
 
+    async function handleLogout(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
+        e.preventDefault();
+        const { error } = await supabase.auth.signOut();
+
+        if (error) {
+            console.error("Logout failed:", error.message);
+            return;
+        }
+        router.push('/login');
+    }
+
     return (
         <div className="min-h-screen bg-slate-950 text-slate-100">
             <div className="container mx-auto px-4 py-8">
@@ -77,9 +89,9 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
-                    {/* <Button className="bg-cyan-600 hover:bg-cyan-700 text-white">
-                        Edit Profile
-                    </Button> */}
+                    <Button className="bg-cyan-600 hover:bg-cyan-700 text-white" onClick={handleLogout}>
+                        Logout
+                    </Button>
                 </div>
 
                 {/* Wellness Summary */}
