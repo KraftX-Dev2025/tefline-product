@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import Image from "next/image";
 
 const navItems = [
     { name: "Home", href: "/", icon: Home },
@@ -48,7 +49,8 @@ export default function Header() {
             )}
         >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <Link href="/" className="flex items-center space-x-2">
+                <Link href="/" className="flex items-center">
+                    <Image src={"/favicon.png"} alt="Logo" width={60} height={60} />
                     <motion.div
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
