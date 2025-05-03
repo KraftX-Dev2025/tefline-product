@@ -26,6 +26,7 @@ import { UserProfile, TaskItem } from "@/lib/types";
 import { getFromLocalStorage, saveToLocalStorage } from "@/lib/utils";
 import { AI_TOOLS } from "@/constants/ai-tools";
 import { GOOGLE_DRIVE_FOLDER_URL } from "@/constants/resources";
+import { createClient } from "@/utils/supabase/client";
 
 // Define task items for onboarding checklist
 const TASK_ITEMS: TaskItem[] = [
@@ -96,6 +97,19 @@ export default function HomePage() {
     const [loading, setLoading] = useState(true);
     const [selectedTask, setSelectedTask] = useState<TaskItem | null>(null);
 
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            if (!session) {
+                router.push("/login");
+            }
+        };
+        checkSession();
+    }, [router]);
     useEffect(() => {
         // Check if user has completed onboarding
         const profile = getFromLocalStorage<UserProfile | null>(
@@ -341,7 +355,7 @@ export default function HomePage() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-card border border-border rounded-lg w-full max-w-xl"
+                        className="bg-card border border-border rounded-lg w-full max-w-xl bg-white shadow-xl"
                     >
                         <div className="p-6">
                             <h3 className="text-2xl font-bold mb-2">
