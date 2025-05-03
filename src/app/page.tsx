@@ -26,6 +26,7 @@ import { UserProfile, TaskItem } from "@/lib/types";
 import { getFromLocalStorage, saveToLocalStorage } from "@/lib/utils";
 import { AI_TOOLS } from "@/constants/ai-tools";
 import { GOOGLE_DRIVE_FOLDER_URL } from "@/constants/resources";
+import { createClient } from "@/utils/supabase/client";
 
 // Define task items for onboarding checklist
 const TASK_ITEMS: TaskItem[] = [
@@ -97,6 +98,19 @@ export default function HomePage() {
     const [selectedTask, setSelectedTask] = useState<TaskItem | null>(null);
 
     useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+
+            if (!session) {
+                router.push("/login");
+            }
+        };
+        checkSession();
+    }, [router]);
+    useEffect(() => {
         // Check if user has completed onboarding
         const profile = getFromLocalStorage<UserProfile | null>(
             "userProfile",
@@ -160,7 +174,7 @@ export default function HomePage() {
                     <div className="bg-card/30 backdrop-blur-sm border border-border rounded-lg p-6">
                         <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
                             <div>
-                                <h2 className="text-2xl font-bold mb-1">
+                                <h2 className="text-2xl font-bold mb-1 text-teal-500">
                                     Your Wellness Journey
                                 </h2>
                                 <p className="text-muted-foreground">
@@ -195,11 +209,10 @@ export default function HomePage() {
                                     }}
                                 >
                                     <Card
-                                        className={`h-full cursor-pointer task-card ${
-                                            task.completed
-                                                ? "bg-primary/5 border-primary/20"
-                                                : "bg-card/70"
-                                        }`}
+                                        className={`h-full cursor-pointer task-card ${task.completed
+                                            ? "bg-primary/5 border-primary/20"
+                                            : "bg-card/70"
+                                            }`}
                                         onClick={() => handleTaskClick(task)}
                                     >
                                         <CardHeader className="pb-2">
@@ -210,11 +223,10 @@ export default function HomePage() {
                                                     </CardTitle>
                                                 </div>
                                                 <div
-                                                    className={`w-6 h-6 rounded-full border flex items-center justify-center ${
-                                                        task.completed
-                                                            ? "bg-primary border-primary text-background"
-                                                            : "border-muted-foreground"
-                                                    }`}
+                                                    className={`w-6 h-6 rounded-full border flex items-center justify-center ${task.completed
+                                                        ? "bg-primary border-primary text-background"
+                                                        : "border-muted-foreground"
+                                                        }`}
                                                 >
                                                     {task.completed && (
                                                         <Check size={14} />
@@ -248,7 +260,7 @@ export default function HomePage() {
                             <div className="p-2 rounded-full bg-primary/10 text-primary">
                                 <BookOpen size={20} />
                             </div>
-                            <h2 className="text-xl font-bold">
+                            <h2 className="text-xl font-bold text-teal-500">
                                 Wellness Resources
                             </h2>
                         </div>
@@ -282,7 +294,7 @@ export default function HomePage() {
                             <div className="p-2 rounded-full bg-primary/10 text-primary">
                                 <BrainCircuit size={20} />
                             </div>
-                            <h2 className="text-xl font-bold">AI Tools</h2>
+                            <h2 className="text-xl font-bold text-teal-500">AI Tools</h2>
                         </div>
 
                         <p className="text-muted-foreground mb-4">
@@ -315,7 +327,7 @@ export default function HomePage() {
                         <div className="p-2 rounded-full bg-primary/10 text-primary">
                             <MessageCircle size={20} />
                         </div>
-                        <h2 className="text-xl font-bold">AI Guide</h2>
+                        <h2 className="text-xl font-bold text-teal-500">AI Guide</h2>
                     </div>
 
                     <p className="text-muted-foreground mb-4">
@@ -343,7 +355,7 @@ export default function HomePage() {
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
-                        className="bg-card border border-border rounded-lg w-full max-w-xl"
+                        className="bg-card border border-border rounded-lg w-full max-w-xl bg-white shadow-xl"
                     >
                         <div className="p-6">
                             <h3 className="text-2xl font-bold mb-2">

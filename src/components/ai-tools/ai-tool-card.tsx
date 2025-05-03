@@ -6,7 +6,7 @@ import {
     ChevronUp,
     Star,
     HelpCircle,
-} from "lucide-react"; // Import HelpCircle and LucideProps
+} from "lucide-react";
 import {
     Card,
     CardContent,
@@ -14,12 +14,12 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-} from "@/components/ui/card"; // Assuming these are your Shadcn UI imports
-import { Button } from "@/components/ui/button"; // Assuming this is your Button component
-import { AITool } from "@/lib/types"; // Make sure this type is defined correctly
-import PromptExamples from "./prompt-examples"; // Your PromptExamples component
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { AITool } from "@/lib/types";
+import PromptExamples from "./prompt-examples";
 import dynamic from "next/dynamic";
-import dynamicIconImports from "lucide-react/dynamicIconImports"; // Import the dynamic imports map
+import dynamicIconImports from "lucide-react/dynamicIconImports";
 
 // Define the IconName type based on the keys of dynamicIconImports
 type IconName = keyof typeof dynamicIconImports;
@@ -43,9 +43,9 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
     // Use HelpCircle as a fallback if the icon name is invalid
     const IconComponent = isValidIcon
         ? dynamic(dynamicIconImports[iconName], {
-              ssr: false, // Keep client-side rendering if needed
-              loading: () => <div className="w-6 h-6" />, // Loading placeholder
-          })
+            ssr: false, // Keep client-side rendering if needed
+            loading: () => <div className="w-6 h-6" />, // Loading placeholder
+        })
         : HelpCircle; // Fallback component (statically imported)
     // --- End Dynamic Icon Loading Logic ---
 
@@ -78,18 +78,18 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
             whileInView="visible"
             viewport={{ once: true }}
         >
-            <Card className="overflow-hidden bg-card/70 backdrop-blur-sm border-accent/20 task-card">
+            <Card className="overflow-hidden bg-white shadow-sm border-gray-200 hover:shadow-md transition-shadow duration-300">
                 <CardHeader className="pb-3">
                     <div className="flex items-center space-x-3 mb-2">
-                        <div className="p-2 rounded-full bg-accent/10 text-accent">
+                        <div className="p-2 rounded-full bg-teal-50 text-teal-500">
                             {/* Render the dynamically loaded component or the fallback */}
                             <IconComponent size={24} />
                         </div>
-                        <CardTitle className="text-2xl gradient-text">
+                        <CardTitle className="text-2xl text-teal-500">
                             {tool.title}
                         </CardTitle>
                     </div>
-                    <CardDescription className="text-base">
+                    <CardDescription className="text-base text-gray-500">
                         {tool.description}
                     </CardDescription>
                 </CardHeader>
@@ -97,9 +97,9 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
                 <CardContent className="pb-3">
                     {/* Try Tool Button */}
                     <Button
-                        variant="gradient" // Assuming you have a 'gradient' variant
+                        variant="default"
                         size="sm"
-                        className="w-full"
+                        className="w-full bg-teal-300 hover:bg-teal-400 text-white"
                         asChild
                     >
                         <a
@@ -117,7 +117,7 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
                     <Button
                         variant="ghost"
                         size="sm"
-                        className="w-full mt-3 flex items-center justify-center text-muted-foreground"
+                        className="w-full mt-3 flex items-center justify-center text-gray-500"
                         onClick={() => setExpanded(!expanded)}
                         aria-expanded={expanded} // Accessibility improvement
                     >
@@ -143,11 +143,11 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
                             exit="hidden"
                         >
                             {/* Example Prompts */}
-                            <CardContent className="border-t border-border pt-4 pb-3">
-                                <h4 className="text-sm font-medium mb-2 flex items-center">
+                            <CardContent className="border-t border-gray-200 pt-4 pb-3">
+                                <h4 className="text-sm font-medium mb-2 flex items-center text-gray-700">
                                     <Star
                                         size={14}
-                                        className="mr-1 text-primary" // Assuming 'primary' is defined in your theme
+                                        className="mr-1 text-teal-500"
                                     />
                                     Example prompts to try
                                 </h4>
@@ -158,11 +158,11 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
                             </CardContent>
 
                             {/* System Prompt */}
-                            <CardContent className="border-t border-border pt-4 pb-3">
-                                <h4 className="text-sm font-medium mb-2">
+                            <CardContent className="border-t border-gray-200 pt-4 pb-3">
+                                <h4 className="text-sm font-medium mb-2 text-gray-700">
                                     System prompt
                                 </h4>
-                                <div className="bg-secondary/50 p-3 rounded-md text-xs text-muted-foreground">
+                                <div className="bg-gray-50 p-3 rounded-md text-xs text-gray-600">
                                     <pre className="whitespace-pre-wrap font-mono">
                                         {tool.systemPrompt}
                                     </pre>
@@ -174,7 +174,7 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
 
                 {/* Footer Note */}
                 <CardFooter className="pt-2 pb-4">
-                    <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-gray-400">
                         This tool will open in a new ChatGPT window
                     </p>
                 </CardFooter>
@@ -182,15 +182,3 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
         </motion.div>
     );
 }
-
-// --- Example AITool Type Definition (adjust as needed) ---
-// You should have this defined properly in @/lib/types
-// export interface AITool {
-//     icon: string; // Must be a valid key from lucide-react/dynamicIconImports
-//     title: string;
-//     description: string;
-//     url: string;
-//     examplePrompts: Array<{ prompt: string; description?: string }>; // Example structure
-//     systemPrompt: string;
-// }
-// --- End Example Type Definition ---

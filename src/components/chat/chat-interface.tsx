@@ -143,16 +143,16 @@ export default function ChatInterface() {
     };
 
     return (
-        <div className="flex flex-col h-[600px] md:h-[700px] bg-card/30 backdrop-blur-sm border border-border rounded-lg overflow-hidden">
+        <div className="flex flex-col h-[600px] md:h-[700px] bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             {/* Chat Header */}
-            <div className="flex items-center justify-between p-4 border-b border-border bg-card/60">
+            <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
                 <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                        <Sparkles size={18} className="text-primary" />
+                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center">
+                        <Sparkles size={18} className="text-teal-500" />
                     </div>
                     <div>
-                        <h3 className="font-medium">AI Guide</h3>
-                        <p className="text-xs text-muted-foreground">
+                        <h3 className="font-medium text-teal-500">AI Guide</h3>
+                        <p className="text-xs text-gray-500">
                             Your wellness assistant
                         </p>
                     </div>
@@ -162,7 +162,7 @@ export default function ChatInterface() {
                     variant="ghost"
                     size="sm"
                     onClick={clearChat}
-                    className="flex items-center text-xs"
+                    className="flex items-center text-xs text-gray-500"
                 >
                     <RefreshCw size={14} className="mr-1" />
                     Clear chat
@@ -172,7 +172,7 @@ export default function ChatInterface() {
             {/* Chat Messages */}
             <div
                 ref={messageContainerRef}
-                className="flex-grow overflow-y-auto p-4 space-y-4"
+                className="flex-grow overflow-y-auto p-4 space-y-4 bg-gray-50"
             >
                 <AnimatePresence initial={false}>
                     {messages.map((message) => (
@@ -192,16 +192,16 @@ export default function ChatInterface() {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        className="flex items-center space-x-2 text-sm text-muted-foreground"
+                        className="flex items-center space-x-2 text-sm text-gray-500"
                     >
                         <div className="flex space-x-1">
-                            <span className="animate-pulse bg-primary/60 rounded-full w-2 h-2"></span>
+                            <span className="animate-pulse bg-teal-300 rounded-full w-2 h-2"></span>
                             <span
-                                className="animate-pulse bg-primary/60 rounded-full w-2 h-2"
+                                className="animate-pulse bg-teal-300 rounded-full w-2 h-2"
                                 style={{ animationDelay: "0.2s" }}
                             ></span>
                             <span
-                                className="animate-pulse bg-primary/60 rounded-full w-2 h-2"
+                                className="animate-pulse bg-teal-300 rounded-full w-2 h-2"
                                 style={{ animationDelay: "0.4s" }}
                             ></span>
                         </div>
@@ -214,8 +214,8 @@ export default function ChatInterface() {
 
             {/* Suggested Prompts */}
             {messages.length <= 2 && (
-                <div className="px-4 py-3 border-t border-border">
-                    <h4 className="text-xs font-medium text-muted-foreground mb-2 flex items-center">
+                <div className="px-4 py-3 border-t border-gray-200 bg-white">
+                    <h4 className="text-xs font-medium text-gray-500 mb-2 flex items-center">
                         <MessageCircle size={12} className="mr-1" />
                         Suggested questions
                     </h4>
@@ -224,7 +224,7 @@ export default function ChatInterface() {
                             (prompt, index) => (
                                 <Button
                                     key={index}
-                                    variant="glass"
+                                    variant="outline"
                                     size="sm"
                                     className="text-xs py-1 h-auto"
                                     onClick={() => sendMessage(prompt)}
@@ -240,14 +240,14 @@ export default function ChatInterface() {
             {/* Chat Input */}
             <form
                 onSubmit={handleSubmit}
-                className="p-4 border-t border-border bg-card/60"
+                className="p-4 border-t border-gray-200 bg-white"
             >
                 <div className="flex space-x-2">
                     <Button
                         type="button"
                         variant="ghost"
                         size="icon"
-                        className="flex-shrink-0"
+                        className="flex-shrink-0 text-gray-400"
                     >
                         <Plus size={18} />
                     </Button>
@@ -257,15 +257,15 @@ export default function ChatInterface() {
                         value={inputMessage}
                         onChange={(e) => setInputMessage(e.target.value)}
                         placeholder="Type a message..."
-                        className="bg-secondary/30"
+                        className="bg-white border-gray-200"
                         disabled={isLoading}
                     />
 
                     <Button
                         type="submit"
-                        variant="gradient"
+                        variant="default"
                         size="icon"
-                        className="flex-shrink-0"
+                        className="flex-shrink-0 bg-teal-300 hover:bg-teal-400"
                         disabled={!inputMessage.trim() || isLoading}
                     >
                         <Send size={18} />
@@ -273,8 +273,8 @@ export default function ChatInterface() {
                 </div>
 
                 <div className="flex items-center justify-center mt-3">
-                    <Clock size={12} className="text-muted-foreground mr-1" />
-                    <span className="text-xs text-muted-foreground">
+                    <Clock size={12} className="text-gray-400 mr-1" />
+                    <span className="text-xs text-gray-400">
                         Messages are stored locally and not saved on our servers
                     </span>
                 </div>

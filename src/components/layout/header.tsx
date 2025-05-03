@@ -43,8 +43,8 @@ export default function Header() {
             className={cn(
                 "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
                 isScrolled
-                    ? "bg-background/80 backdrop-blur-lg shadow-md"
-                    : "bg-transparent"
+                    ? "bg-white/90 backdrop-blur-lg shadow-sm"
+                    : "bg-white"
             )}
         >
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -54,7 +54,7 @@ export default function Header() {
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
                     >
-                        <span className="text-2xl font-bold gradient-text">
+                        <span className="text-2xl font-bold text-teal-500">
                             Tefline
                         </span>
                     </motion.div>
@@ -71,10 +71,10 @@ export default function Header() {
                                 key={item.name}
                                 href={item.href}
                                 className={cn(
-                                    "relative flex items-center space-x-1 text-sm font-medium transition-colors hover:text-primary",
+                                    "relative flex items-center space-x-1 text-sm font-medium transition-colors hover:text-teal-500",
                                     isActive
-                                        ? "text-primary"
-                                        : "text-muted-foreground"
+                                        ? "text-teal-500"
+                                        : "text-gray-600"
                                 )}
                             >
                                 <Icon size={16} />
@@ -82,7 +82,7 @@ export default function Header() {
                                 {isActive && (
                                     <motion.div
                                         layoutId="activeIndicator"
-                                        className="absolute bottom-[-10px] left-0 right-0 h-[3px] bg-primary rounded-full"
+                                        className="absolute bottom-[-10px] left-0 right-0 h-[3px] bg-teal-300 rounded-full"
                                         transition={{ duration: 0.3 }}
                                     />
                                 )}
@@ -115,7 +115,7 @@ export default function Header() {
                     animate={{ opacity: 1, height: "auto" }}
                     exit={{ opacity: 0, height: 0 }}
                     transition={{ duration: 0.3 }}
-                    className="md:hidden bg-card border-b border-border"
+                    className="md:hidden bg-white border-b border-gray-200"
                 >
                     <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
                         {navItems.map((item) => {
@@ -129,8 +129,8 @@ export default function Header() {
                                     className={cn(
                                         "flex items-center space-x-2 p-2 rounded-md",
                                         isActive
-                                            ? "bg-primary/10 text-primary"
-                                            : "text-muted-foreground hover:bg-secondary/50"
+                                            ? "bg-teal-50 text-teal-500"
+                                            : "text-gray-600 hover:bg-gray-50"
                                     )}
                                     onClick={() => setIsMobileMenuOpen(false)}
                                 >

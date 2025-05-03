@@ -15,7 +15,7 @@ import { useRouter } from "next/navigation";
 
 export default function ChatPage() {
     const router = useRouter();
-    
+
     useEffect(() => {
         const checkSession = async () => {
             const supabase = createClient();
@@ -69,10 +69,10 @@ export default function ChatPage() {
                                     <div className="p-2 rounded-full bg-primary/10">
                                         <Info
                                             size={18}
-                                            className="text-primary"
+                                            className="text-primary text-teal-500"
                                         />
                                     </div>
-                                    <h3 className="text-lg font-medium">
+                                    <h3 className="text-lg font-medium text-teal-500">
                                         About AI Guide
                                     </h3>
                                 </div>
@@ -130,10 +130,10 @@ export default function ChatPage() {
                                     <div className="p-2 rounded-full bg-primary/10">
                                         <MessageCircle
                                             size={18}
-                                            className="text-primary"
+                                            className="text-primary text-teal-500"
                                         />
                                     </div>
-                                    <h3 className="text-lg font-medium">
+                                    <h3 className="text-lg font-medium text-teal-500">
                                         Try Asking
                                     </h3>
                                 </div>
@@ -160,10 +160,10 @@ export default function ChatPage() {
                                     <div className="p-2 rounded-full bg-primary/10">
                                         <ExternalLink
                                             size={18}
-                                            className="text-primary"
+                                            className="text-primary text-teal-500"
                                         />
                                     </div>
-                                    <h3 className="text-lg font-medium">
+                                    <h3 className="text-lg font-medium text-teal-500">
                                         Specialized AI Tools
                                     </h3>
                                 </div>
