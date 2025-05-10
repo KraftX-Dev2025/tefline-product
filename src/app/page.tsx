@@ -1,102 +1,109 @@
+// src/app/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import {
-    Check,
-    ChevronRight,
-    BookOpen,
-    BrainCircuit,
-    MessageCircle,
-    Sparkles,
-} from "lucide-react";
-import HeroSection from "@/components/layout/hero-section";
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card";
+import { Sparkles, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { UserProfile, TaskItem } from "@/lib/types";
-import { getFromLocalStorage, saveToLocalStorage } from "@/lib/utils";
-import { AI_TOOLS } from "@/constants/ai-tools";
-import { GOOGLE_DRIVE_FOLDER_URL } from "@/constants/resources";
 import { createClient } from "@/utils/supabase/client";
+import { UserProfile } from "@/lib/types";
+import { AI_TOOLS } from "@/constants/ai-tools";
 
-// Define task items for onboarding checklist
-const TASK_ITEMS: TaskItem[] = [
+// Import our new components
+import ProgressPath from "@/components/home/progress-path";
+import ToolCard from "@/components/home/tool-card";
+import WellnessGauge from "@/components/home/wellness-gauge";
+import DailyTip from "@/components/home/daily-tip";
+import MoodSelector from "@/components/home/mood-selector";
+import ProgressChart from "@/components/home/progress-chart";
+import HabitTracker from "@/components/home/habit-tracker";
+
+// Define the journey steps
+const JOURNEY_STEPS = [
     {
-        id: "explore-resources",
-        title: "Explore Google Drive Resources",
-        description:
-            "Browse through our curated collection of wellness resources",
-        completed: false,
-        tutorialContent: `
-      Our Google Drive folder contains organized resources on nutrition, fitness, mental health, and more.
-      
-      The documents are searchable, allowing you to quickly find information relevant to your wellness goals.
-      
-      Try searching for specific topics like "sleep improvement" or "stress management" using the search feature in Google Drive.
-    `,
-        link: GOOGLE_DRIVE_FOLDER_URL,
+        id: "welcome",
+        title: "Welcome",
+        completed: true,
     },
     {
-        id: "try-lifestyle-digital",
-        title: "Try Lifestyle Digital GPT",
-        description:
-            "Get personalized wellness recommendations from our specialized AI",
+        id: "resources",
+        title: "Resources",
         completed: false,
-        tutorialContent: `
-      Lifestyle Digital is an AI tool designed to provide personalized wellness recommendations based on lifestyle medicine principles.
-      
-      It can help with nutrition guidance, exercise routines, sleep improvement strategies, and stress management techniques.
-      
-      Try asking specific questions about your wellness goals to get tailored advice.
-    `,
-        link: AI_TOOLS[0].url,
     },
     {
-        id: "try-cognitive-counselor",
-        title: "Try Cognitive Counselor GPT",
-        description: "Identify cognitive patterns and mental wellness insights",
+        id: "lifestyle-digital",
+        title: "Lifestyle AI",
         completed: false,
-        tutorialContent: `
-      Cognitive Counselor helps identify cognitive distortions and thought patterns that may be affecting your well-being.
-      
-      It provides insights into how your thinking influences your emotions and behaviors.
-      
-      Try sharing a challenging thought or situation to receive an analysis of your cognitive patterns.
-    `,
-        link: AI_TOOLS[1].url,
     },
     {
-        id: "chat-with-guide",
-        title: "Chat with AI Guide",
-        description: "Get help navigating the platform and resources",
+        id: "cognitive",
+        title: "Cognitive AI",
         completed: false,
-        tutorialContent: `
-      Our AI Guide can help you navigate the platform, find relevant resources, and understand how to use the specialized AI tools.
-      
-      It can answer questions about lifestyle medicine concepts and direct you to appropriate resources.
-      
-      Try asking how to make the most of the platform based on your wellness goals.
-    `,
-        link: "/chat",
+    },
+    {
+        id: "chat-guide",
+        title: "AI Guide",
+        completed: false,
+    },
+    {
+        id: "profile",
+        title: "Complete Profile",
+        completed: false,
+        locked: true,
     },
 ];
 
-export default function HomePage() {
-    const router = useRouter();
-    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-    const [tasks, setTasks] = useState<TaskItem[]>(TASK_ITEMS);
-    const [loading, setLoading] = useState(true);
-    const [selectedTask, setSelectedTask] = useState<TaskItem | null>(null);
+// Main tools for quick access with appropriate image names
+const MAIN_TOOLS = [
+    {
+        id: "resources",
+        title: "Wellness Resources",
+        description:
+            "Access guides, worksheets, and materials on nutrition, fitness, and sleep",
+        iconImage: "food",
+        link: "/resources",
+        isExternal: false,
+    },
+    {
+        id: "lifestyle-digital",
+        title: "Lifestyle Digital",
+        description:
+            "AI-powered personalized wellness recommendations and guidance",
+        iconImage: "med",
+        link: AI_TOOLS[0].url,
+        isExternal: true,
+    },
+    {
+        id: "cognitive-counselor",
+        title: "Cognitive Counselor",
+        description:
+            "Identify cognitive patterns and get mental wellness insights",
+        iconImage: "sleep",
+        link: AI_TOOLS[1].url,
+        isExternal: true,
+    },
+    {
+        id: "chat-guide",
+        title: "AI Guide Chat",
+        description: "Get help navigating the platform and resources",
+        iconImage: "ex",
+        link: "/chat",
+        isExternal: false,
+    },
+];
 
+export default function DuolingoStyleHomePage() {
+    const router = useRouter();
+    const [currentStep, setCurrentStep] = useState(0);
+    const [journeySteps, setJourneySteps] = useState(JOURNEY_STEPS);
+    const [wellnessScore, setWellnessScore] = useState(75);
+    const [previousScore, setPreviousScore] = useState(68);
+    const [loading, setLoading] = useState(true);
+    const [unreadMessages, setUnreadMessages] = useState(2);
+    const [usedTools, setUsedTools] = useState<string[]>([]);
+
+    // Effect for auth check
     useEffect(() => {
         const checkSession = async () => {
             const supabase = createClient();
@@ -106,49 +113,74 @@ export default function HomePage() {
 
             if (!session) {
                 router.push("/login");
+                return;
             }
+
+            setLoading(false);
         };
+
         checkSession();
     }, [router]);
-    useEffect(() => {
-        // Check if user has completed onboarding
-        const profile = getFromLocalStorage<UserProfile | null>(
-            "userProfile",
-            null
-        );
-        setUserProfile(profile);
 
-        // Get saved task status
-        const savedTasks = getFromLocalStorage<TaskItem[]>("tasks", TASK_ITEMS);
-        setTasks(savedTasks);
+    // Handler for step clicking in the journey path
+    const handleStepClick = (stepId: string) => {
+        const stepIndex = journeySteps.findIndex((step) => step.id === stepId);
+        if (stepIndex >= 0 && !journeySteps[stepIndex].locked) {
+            setCurrentStep(stepIndex);
 
-        // Redirect to onboarding if not completed
-        if (!profile?.completedSetup) {
-            router.push("/onboarding");
+            // Route to the appropriate page based on the step
+            switch (stepId) {
+                case "resources":
+                    router.push("/resources");
+                    markToolAsUsed("resources");
+                    break;
+                case "lifestyle-digital":
+                    window.open(AI_TOOLS[0].url, "_blank");
+                    markToolAsUsed("lifestyle-digital");
+                    break;
+                case "cognitive":
+                    window.open(AI_TOOLS[1].url, "_blank");
+                    markToolAsUsed("cognitive-counselor");
+                    break;
+                case "chat-guide":
+                    router.push("/chat");
+                    markToolAsUsed("chat-guide");
+                    break;
+                case "profile":
+                    router.push("/profile");
+                    break;
+            }
         }
-
-        setLoading(false);
-    }, [router]);
-
-    const completedTasksCount = tasks.filter((task) => task.completed).length;
-    const progress = (completedTasksCount / tasks.length) * 100;
-
-    const markTaskCompleted = (taskId: string) => {
-        const updatedTasks = tasks.map((task) =>
-            task.id === taskId ? { ...task, completed: true } : task
-        );
-
-        setTasks(updatedTasks);
-        saveToLocalStorage("tasks", updatedTasks);
     };
 
-    const handleTaskClick = (task: TaskItem) => {
-        setSelectedTask(task);
+    // Mark a tool as used when clicked - only updates React state, no localStorage
+    const markToolAsUsed = (toolId: string) => {
+        // Don't add duplicates
+        if (!usedTools.includes(toolId)) {
+            const updatedTools = [...usedTools, toolId];
+            setUsedTools(updatedTools);
+
+            // Update journey progress
+            const updatedSteps = [...journeySteps];
+            const stepIndex = updatedSteps.findIndex(
+                (step) => step.id === toolId
+            );
+            if (stepIndex >= 0) {
+                updatedSteps[stepIndex].completed = true;
+                setJourneySteps(updatedSteps);
+            }
+
+            // Additional tool-specific effects
+            if (toolId === "chat-guide") {
+                setUnreadMessages(0);
+            }
+        }
     };
 
+    // Loading state
     if (loading) {
         return (
-            <div className="container mx-auto px-4 py-12 flex items-center justify-center">
+            <div className="container mx-auto px-4 py-12 flex items-center justify-center min-h-[60vh]">
                 <div className="text-center">
                     <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mx-auto"></div>
                     <p className="mt-4 text-muted-foreground">Loading...</p>
@@ -158,258 +190,153 @@ export default function HomePage() {
     }
 
     return (
-        <>
-            <HeroSection
-                title="Welcome to Tefline"
-                subtitle="Your intelligent companion for wellness and lifestyle medicine"
-                bgPattern
-                gradient
-                centered
-                size="md"
-            />
+        <div className="bg-gray-50 min-h-screen pb-12">
+            {/* Header title with subtle animation */}
+            <div className="bg-white border-b border-gray-200 py-6">
+                <div className="container mx-auto px-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="text-center"
+                    >
+                        <h1 className="text-3xl md:text-4xl font-bold mb-2 text-teal-500">
+                            Welcome to Tefline
+                        </h1>
+                        <p className="text-gray-600">
+                            Your intelligent companion for wellness and
+                            lifestyle medicine
+                        </p>
+                    </motion.div>
+                </div>
+            </div>
 
-            <div className="container mx-auto px-4 py-12">
-                {/* Progress Section */}
-                <div className="mb-12">
-                    <div className="bg-card/30 backdrop-blur-sm border border-border rounded-lg p-6">
-                        <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                            <div>
-                                <h2 className="text-2xl font-bold mb-1 text-teal-500">
-                                    Your Wellness Journey
-                                </h2>
-                                <p className="text-muted-foreground">
-                                    Complete these tasks to get started with
-                                    Tefline
-                                </p>
-                            </div>
-
-                            <div className="mt-4 md:mt-0 bg-secondary/50 px-4 py-2 rounded-full">
-                                <span className="text-sm font-medium">
-                                    {completedTasksCount} of {tasks.length}{" "}
-                                    completed
-                                </span>
-                            </div>
-                        </div>
-
-                        <Progress value={progress} className="h-2 mb-8" />
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                            {tasks.map((task, index) => (
-                                <motion.div
-                                    key={task.id}
-                                    initial={{ opacity: 0, y: 20 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                        delay: index * 0.1,
-                                        duration: 0.5,
-                                    }}
-                                    whileHover={{
-                                        y: -5,
-                                        transition: { duration: 0.2 },
-                                    }}
-                                >
-                                    <Card
-                                        className={`h-full cursor-pointer task-card ${task.completed
-                                            ? "bg-primary/5 border-primary/20"
-                                            : "bg-card/70"
-                                            }`}
-                                        onClick={() => handleTaskClick(task)}
-                                    >
-                                        <CardHeader className="pb-2">
-                                            <div className="flex items-start justify-between">
-                                                <div className="flex-1">
-                                                    <CardTitle className="text-lg">
-                                                        {task.title}
-                                                    </CardTitle>
-                                                </div>
-                                                <div
-                                                    className={`w-6 h-6 rounded-full border flex items-center justify-center ${task.completed
-                                                        ? "bg-primary border-primary text-background"
-                                                        : "border-muted-foreground"
-                                                        }`}
-                                                >
-                                                    {task.completed && (
-                                                        <Check size={14} />
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </CardHeader>
-
-                                        <CardContent>
-                                            <CardDescription className="text-sm">
-                                                {task.description}
-                                            </CardDescription>
-                                        </CardContent>
-                                    </Card>
-                                </motion.div>
-                            ))}
-                        </div>
+            {/* Main content */}
+            <div className="container mx-auto px-4 mt-8">
+                {/* Journey Progress Path */}
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm mb-8 overflow-x-auto">
+                    <div className="p-4">
+                        <h2 className="text-xl font-bold text-gray-700 mb-4">
+                            Your Wellness Journey
+                        </h2>
+                        <ProgressPath
+                            steps={journeySteps}
+                            currentStepIndex={currentStep}
+                            onStepClick={handleStepClick}
+                        />
                     </div>
                 </div>
 
-                {/* Feature Sections */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-                    {/* Resources Section */}
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2, duration: 0.5 }}
-                        className="bg-card/30 backdrop-blur-sm border border-border rounded-lg p-6"
-                    >
-                        <div className="flex items-center space-x-3 mb-4">
-                            <div className="p-2 rounded-full bg-primary/10 text-primary">
-                                <BookOpen size={20} />
-                            </div>
-                            <h2 className="text-xl font-bold text-teal-500">
-                                Wellness Resources
-                            </h2>
-                        </div>
-
-                        <p className="text-muted-foreground mb-4">
-                            Access our curated collection of wellness resources
-                            in Google Drive, including guides on nutrition,
-                            fitness, sleep, and stress management.
-                        </p>
-
-                        <Button
-                            variant="outline"
-                            className="flex items-center"
-                            asChild
+                {/* Tools Grid - easy access to main features */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    {MAIN_TOOLS.map((tool, index) => (
+                        <div
+                            key={tool.id}
+                            onClick={() => markToolAsUsed(tool.id)}
                         >
-                            <a href="/resources">
-                                Browse Resources{" "}
-                                <ChevronRight size={16} className="ml-1" />
-                            </a>
-                        </Button>
-                    </motion.div>
-
-                    {/* AI Tools Section */}
-                    <motion.div
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3, duration: 0.5 }}
-                        className="bg-card/30 backdrop-blur-sm border border-border rounded-lg p-6"
-                    >
-                        <div className="flex items-center space-x-3 mb-4">
-                            <div className="p-2 rounded-full bg-primary/10 text-primary">
-                                <BrainCircuit size={20} />
-                            </div>
-                            <h2 className="text-xl font-bold text-teal-500">AI Tools</h2>
+                            <ToolCard
+                                id={tool.id}
+                                title={tool.title}
+                                description={tool.description}
+                                iconImage={tool.iconImage}
+                                link={tool.link}
+                                isExternal={tool.isExternal}
+                                used={usedTools.includes(tool.id)}
+                                index={index}
+                            />
                         </div>
-
-                        <p className="text-muted-foreground mb-4">
-                            Get personalized wellness recommendations and
-                            cognitive insights from our specialized AI tools
-                            designed for lifestyle medicine.
-                        </p>
-
-                        <Button
-                            variant="outline"
-                            className="flex items-center"
-                            asChild
-                        >
-                            <a href="/ai-tools">
-                                Explore AI Tools{" "}
-                                <ChevronRight size={16} className="ml-1" />
-                            </a>
-                        </Button>
-                    </motion.div>
+                    ))}
                 </div>
 
-                {/* Chat Section */}
+                {/* Chat quick access - floating button */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.5 }}
-                    className="bg-card/30 backdrop-blur-sm border border-border rounded-lg p-6 mb-12"
+                    className="fixed bottom-4 right-4 z-10"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                 >
-                    <div className="flex items-center space-x-3 mb-4">
-                        <div className="p-2 rounded-full bg-primary/10 text-primary">
-                            <MessageCircle size={20} />
-                        </div>
-                        <h2 className="text-xl font-bold text-teal-500">AI Guide</h2>
-                    </div>
-
-                    <p className="text-muted-foreground mb-4">
-                        Chat with our AI Guide to navigate the platform, find
-                        relevant resources, and get answers to your wellness
-                        questions.
-                    </p>
-
                     <Button
                         variant="gradient"
-                        className="flex items-center"
-                        asChild
+                        size="lg"
+                        className="rounded-full h-14 w-14 sm:h-16 sm:w-16 shadow-lg"
+                        onClick={() => {
+                            router.push("/chat");
+                            markToolAsUsed("chat-guide");
+                        }}
                     >
-                        <a href="/chat">
-                            Start Chatting{" "}
-                            <Sparkles size={16} className="ml-1" />
-                        </a>
+                        <div className="relative">
+                            <MessageCircle size={26} />
+                            {unreadMessages > 0 && (
+                                <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                    {unreadMessages}
+                                </div>
+                            )}
+                        </div>
+                    </Button>
+                </motion.div>
+
+                {/* Dashboard Widgets - 2x2 grid on desktop, single column on mobile */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    {/* Top Row */}
+                    <WellnessGauge
+                        score={wellnessScore}
+                        previousScore={previousScore}
+                    />
+                    <MoodSelector
+                        onMoodSelect={() => {
+                            // Simulate score update when mood is selected
+                            setWellnessScore((prevScore) => {
+                                setPreviousScore(prevScore);
+                                // Random small adjustment
+                                return Math.min(
+                                    100,
+                                    Math.max(
+                                        0,
+                                        prevScore +
+                                            Math.floor(Math.random() * 5) -
+                                            2
+                                    )
+                                );
+                            });
+                        }}
+                    />
+
+                    {/* Bottom Row */}
+                    <ProgressChart />
+                    <DailyTip />
+                </div>
+
+                {/* Habit Tracker */}
+                <div className="mb-8">
+                    <HabitTracker />
+                </div>
+
+                {/* Footer CTA */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="bg-gradient-to-r from-teal-500 to-teal-600 rounded-xl p-6 text-white text-center"
+                >
+                    <h3 className="text-xl font-bold mb-2 flex items-center justify-center">
+                        <Sparkles className="mr-2" size={20} />
+                        Continue Your Wellness Journey
+                    </h3>
+                    <p className="mb-4 max-w-lg mx-auto">
+                        Complete the steps in your wellness journey to unlock
+                        personalized recommendations and track your progress.
+                    </p>
+                    <Button
+                        variant="glass"
+                        className="bg-white/20 hover:bg-white/30 border-white/40 text-white"
+                        onClick={() =>
+                            handleStepClick(journeySteps[currentStep].id)
+                        }
+                    >
+                        Continue to{" "}
+                        {journeySteps[currentStep]?.title || "Next Step"}
                     </Button>
                 </motion.div>
             </div>
-
-            {/* Task Tutorial Modal */}
-            {selectedTask && (
-                <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="bg-card border border-border rounded-lg w-full max-w-xl bg-white shadow-xl"
-                    >
-                        <div className="p-6">
-                            <h3 className="text-2xl font-bold mb-2">
-                                {selectedTask.title}
-                            </h3>
-                            <p className="text-muted-foreground mb-6">
-                                {selectedTask.description}
-                            </p>
-
-                            <div className="bg-secondary/30 p-4 rounded-lg mb-6">
-                                <h4 className="font-medium mb-2">
-                                    How to use this feature:
-                                </h4>
-                                <div className="text-sm whitespace-pre-line">
-                                    {selectedTask.tutorialContent}
-                                </div>
-                            </div>
-
-                            <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-2">
-                                <Button
-                                    variant="outline"
-                                    onClick={() => setSelectedTask(null)}
-                                >
-                                    Close
-                                </Button>
-
-                                {selectedTask.link && (
-                                    <Button
-                                        variant="gradient"
-                                        asChild
-                                        onClick={() =>
-                                            markTaskCompleted(selectedTask.id)
-                                        }
-                                    >
-                                        <a
-                                            href={selectedTask.link}
-                                            target={
-                                                selectedTask.link.startsWith(
-                                                    "http"
-                                                )
-                                                    ? "_blank"
-                                                    : "_self"
-                                            }
-                                            rel="noopener noreferrer"
-                                        >
-                                            Open & Mark Complete
-                                        </a>
-                                    </Button>
-                                )}
-                            </div>
-                        </div>
-                    </motion.div>
-                </div>
-            )}
-        </>
+        </div>
     );
 }
