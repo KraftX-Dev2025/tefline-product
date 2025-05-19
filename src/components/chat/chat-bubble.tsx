@@ -19,7 +19,7 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
         // Replace URLs with clickable links
         const urlRegex = /(https?:\/\/[^\s]+)/g;
         let processedContent = content.replace(urlRegex, (url) => {
-            return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-teal-500 underline">${url}</a>`;
+            return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="text-[#3CCBC9] underline">${url}</a>`;
         });
 
         // Replace newlines with <br>
@@ -50,8 +50,8 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
             {/* Avatar for bot messages */}
             {!isUser && (
                 <div className="flex-shrink-0 mr-2">
-                    <div className="w-8 h-8 rounded-full bg-teal-50 flex items-center justify-center">
-                        <Bot size={16} className="text-teal-500" />
+                    <div className="w-8 h-8 rounded-full bg-[#3CCBC9]/10 flex items-center justify-center">
+                        <Bot size={16} className="text-[#3CCBC9]" />
                     </div>
                 </div>
             )}
@@ -61,7 +61,7 @@ export default function ChatBubble({ message }: ChatBubbleProps) {
                     className={cn(
                         "rounded-md",
                         isUser
-                            ? "bg-teal-300 text-white rounded-tr-none px-4 py-3"
+                            ? "bg-[#3CCBC9] text-white rounded-tr-none px-4 py-3"
                             : "bg-gray-100 text-gray-800 rounded-tl-none px-4 py-3"
                     )}
                 >

@@ -30,9 +30,9 @@ export default function ResourceCard({ resource, index }: ResourceCardProps) {
     // Dynamically import the specific icon component or use fallback
     const Icon = isValidIcon
         ? dynamic(dynamicIconImports[iconName], {
-            ssr: false,
-            loading: () => <div className="w-5 h-5" />,
-        })
+              ssr: false,
+              loading: () => <div className="w-5 h-5" />,
+          })
         : FileText; // Fallback to FileText icon if the icon name is invalid
 
     const cardVariants = {
@@ -55,17 +55,19 @@ export default function ResourceCard({ resource, index }: ResourceCardProps) {
             viewport={{ once: true }}
             whileHover={{ y: -5, transition: { duration: 0.2 } }}
         >
-            <Card className="h-full flex flex-col bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
+            <Card className="h-full flex flex-col bg-white overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300 border border-gray-100">
                 <CardHeader>
                     <div className="flex items-center space-x-2 mb-2">
-                        <div className="p-2 rounded-full bg-teal-50 text-teal-500">
+                        <div className="p-2 rounded-full bg-[#3CCBC9]/10 text-[#3CCBC9]">
                             <Icon size={20} />
                         </div>
-                        <CardTitle className="text-xl text-teal-500">
+                        <CardTitle className="text-xl text-gray-800">
                             {resource.title}
                         </CardTitle>
                     </div>
-                    <CardDescription className="text-gray-500">{resource.description}</CardDescription>
+                    <CardDescription className="text-gray-500">
+                        {resource.description}
+                    </CardDescription>
                 </CardHeader>
 
                 <CardContent className="flex-grow">
@@ -76,7 +78,7 @@ export default function ResourceCard({ resource, index }: ResourceCardProps) {
                     <Button
                         variant="outline"
                         size="sm"
-                        className="w-full border-gray-200 hover:bg-teal-50 hover:text-teal-600"
+                        className="w-full border-gray-200 hover:bg-[#3CCBC9]/10 hover:text-[#3CCBC9] hover:border-[#3CCBC9]"
                         asChild
                     >
                         <a

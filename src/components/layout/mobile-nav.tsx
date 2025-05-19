@@ -10,7 +10,6 @@ import {
     BrainCircuit,
     MessageSquare,
     User,
-    Plus,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -42,7 +41,7 @@ const MobileNav = ({ onQuickActionClick }: MobileNavProps) => {
                             href={item.href}
                             className={cn(
                                 "flex flex-col items-center justify-center",
-                                isActive ? "text-teal-600" : "text-gray-500"
+                                isActive ? "text-[#3CCBC9]" : "text-gray-500"
                             )}
                         >
                             <Icon size={20} className="mb-1" />
@@ -53,7 +52,7 @@ const MobileNav = ({ onQuickActionClick }: MobileNavProps) => {
                             {isActive && (
                                 <motion.div
                                     layoutId="mobileNavIndicator"
-                                    className="absolute bottom-0 h-1 w-12 bg-teal-500 rounded-t-full"
+                                    className="absolute bottom-0 h-1 w-12 bg-gradient-to-r from-[#3CCBC9] to-[#935DFD] rounded-t-full"
                                     transition={{ duration: 0.2 }}
                                 />
                             )}

@@ -1,6 +1,6 @@
 // N8N webhook URL for the chatbot
 export const N8N_WEBHOOK_URL =
-    "https://neillu.app.n8n.cloud/webhook/d08de943-b8d2-44a7-bb6c-4a8f80d4617f";
+    "https://leotekg.app.n8n.cloud/webhook/40b0148c-659e-4d19-8875-31dadaa8b870";
 
 // System message that defines the chatbot's purpose and capabilities
 export const CHATBOT_SYSTEM_MESSAGE = `

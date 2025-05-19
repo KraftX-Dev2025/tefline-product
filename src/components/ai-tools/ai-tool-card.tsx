@@ -43,9 +43,9 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
     // Use HelpCircle as a fallback if the icon name is invalid
     const IconComponent = isValidIcon
         ? dynamic(dynamicIconImports[iconName], {
-            ssr: false, // Keep client-side rendering if needed
-            loading: () => <div className="w-6 h-6" />, // Loading placeholder
-        })
+              ssr: false, // Keep client-side rendering if needed
+              loading: () => <div className="w-6 h-6" />, // Loading placeholder
+          })
         : HelpCircle; // Fallback component (statically imported)
     // --- End Dynamic Icon Loading Logic ---
 
@@ -78,14 +78,14 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
             whileInView="visible"
             viewport={{ once: true }}
         >
-            <Card className="overflow-hidden bg-white shadow-sm border-gray-200 hover:shadow-md transition-shadow duration-300">
+            <Card className="overflow-hidden bg-white shadow-sm border-gray-200 hover:shadow-md transition-all duration-300">
                 <CardHeader className="pb-3">
                     <div className="flex items-center space-x-3 mb-2">
-                        <div className="p-2 rounded-full bg-teal-50 text-teal-500">
+                        <div className="p-3 rounded-full bg-[#3CCBC9]/10 text-[#3CCBC9]">
                             {/* Render the dynamically loaded component or the fallback */}
                             <IconComponent size={24} />
                         </div>
-                        <CardTitle className="text-2xl text-teal-500">
+                        <CardTitle className="text-2xl text-gray-800">
                             {tool.title}
                         </CardTitle>
                     </div>
@@ -97,9 +97,9 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
                 <CardContent className="pb-3">
                     {/* Try Tool Button */}
                     <Button
-                        variant="default"
+                        variant="gradient"
                         size="sm"
-                        className="w-full bg-teal-300 hover:bg-teal-400 text-white"
+                        className="w-full"
                         asChild
                     >
                         <a
@@ -147,7 +147,7 @@ export default function AIToolCard({ tool, index }: AIToolCardProps) {
                                 <h4 className="text-sm font-medium mb-2 flex items-center text-gray-700">
                                     <Star
                                         size={14}
-                                        className="mr-1 text-teal-500"
+                                        className="mr-1 text-[#3CCBC9]"
                                     />
                                     Example prompts to try
                                 </h4>

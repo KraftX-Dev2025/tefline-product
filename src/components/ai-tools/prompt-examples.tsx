@@ -45,7 +45,7 @@ export default function PromptExamples({
                         <div className="bg-gray-50 p-2 flex items-center justify-center">
                             <MessageSquare
                                 size={16}
-                                className="text-gray-400"
+                                className="text-[#3CCBC9]"
                             />
                         </div>
 
@@ -57,7 +57,7 @@ export default function PromptExamples({
                             <Button
                                 variant="ghost"
                                 size="sm"
-                                className="h-7 px-2 bg-teal-50 text-teal-600 hover:bg-teal-100"
+                                className="h-7 px-2 bg-[#3CCBC9]/10 text-[#3CCBC9] hover:bg-[#3CCBC9]/20"
                                 asChild
                             >
                                 <a

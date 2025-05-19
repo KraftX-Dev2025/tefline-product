@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Search, FileText, Info } from "lucide-react";
+import { Search, FileText, Info, BookOpen, Folder } from "lucide-react";
 import HeroSection from "@/components/layout/hero-section";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -82,31 +82,106 @@ export default function ResourcesPage() {
             />
 
             <div className="container mx-auto px-4 py-12">
-                {/* Google Drive Link */}
-                <div className="mb-8">
-                    <DriveLink
-                        description="All resources are stored in our Google Drive folder. Click below to browse or use the search to find specific topics."
-                        showTips={showTips}
-                    />
-                    <div className="flex justify-end mt-2">
-                        <Button
-                            variant="ghost"
-                            size="sm"
-                            className="text-xs flex items-center"
-                            onClick={() => setShowTips(!showTips)}
-                        >
-                            <Info size={14} className="mr-1" />
-                            {showTips ? "Hide search tips" : "Show search tips"}
-                        </Button>
-                    </div>
-                </div>
+                {/* Google Drive Link with new design */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="mb-8"
+                >
+                    <Card className="bg-gradient-to-r from-[#3CCBC9]/10 to-[#935DFD]/10 border-none shadow-sm">
+                        <CardContent className="p-6">
+                            <div className="flex flex-col md:flex-row md:items-center gap-4">
+                                <div className="p-4 bg-white rounded-xl shadow-sm">
+                                    <Folder className="h-8 w-8 text-[#3CCBC9]" />
+                                </div>
+
+                                <div className="flex-grow">
+                                    <h3 className="text-xl font-bold text-gray-800 mb-2">
+                                        Google Drive Resources
+                                    </h3>
+                                    <p className="text-gray-600 mb-4">
+                                        All resources are stored in our Google
+                                        Drive folder. Click below to browse or
+                                        use the search to find specific topics.
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-3">
+                                        <Button
+                                            className="bg-[#3CCBC9] hover:bg-[#35b5b3]"
+                                            asChild
+                                        >
+                                            <a
+                                                href={`https://drive.google.com/drive/folders/1C1CqKbGPuV8DbyauffOUOBS8Fg3mGV3j`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                Browse All Resources
+                                            </a>
+                                        </Button>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            className="text-xs flex items-center"
+                                            onClick={() =>
+                                                setShowTips(!showTips)
+                                            }
+                                        >
+                                            <Info size={14} className="mr-1" />
+                                            {showTips
+                                                ? "Hide search tips"
+                                                : "Show search tips"}
+                                        </Button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Search Tips */}
+                            {showTips && (
+                                <motion.div
+                                    initial={{ opacity: 0, height: 0 }}
+                                    animate={{ opacity: 1, height: "auto" }}
+                                    exit={{ opacity: 0, height: 0 }}
+                                    className="mt-6 bg-white rounded-lg p-4 border border-gray-100"
+                                >
+                                    <h4 className="text-sm font-medium flex items-center text-gray-700 mb-3">
+                                        <BookOpen
+                                            size={14}
+                                            className="mr-2 text-[#3CCBC9]"
+                                        />
+                                        Drive Search Tips
+                                    </h4>
+                                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-gray-600">
+                                        {RESOURCE_SEARCH_TIPS.map(
+                                            (tip, index) => (
+                                                <li
+                                                    key={index}
+                                                    className="flex items-start"
+                                                >
+                                                    <span className="text-[#3CCBC9] mr-2">
+                                                        •
+                                                    </span>
+                                                    <span>{tip}</span>
+                                                </li>
+                                            )
+                                        )}
+                                    </ul>
+                                </motion.div>
+                            )}
+                        </CardContent>
+                    </Card>
+                </motion.div>
 
                 {/* Search and Filters */}
-                <div className="flex flex-col md:flex-row gap-4 mb-8">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                    className="flex flex-col md:flex-row gap-4 mb-8"
+                >
                     <form onSubmit={handleSearch} className="flex-grow">
                         <div className="relative">
                             <Search
-                                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground"
+                                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                                 size={18}
                             />
                             <Input
@@ -114,7 +189,7 @@ export default function ResourcesPage() {
                                 placeholder="Search resources..."
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
-                                className="pl-10 bg-card/50"
+                                className="pl-10 bg-white border-gray-200 shadow-sm h-12"
                             />
                         </div>
                     </form>
@@ -128,6 +203,9 @@ export default function ResourcesPage() {
                             }
                             size="sm"
                             onClick={() => setSelectedCategory("all")}
+                            className={
+                                selectedCategory === "all" ? "bg-[#3CCBC9]" : ""
+                            }
                         >
                             All
                         </Button>
@@ -147,46 +225,60 @@ export default function ResourcesPage() {
                                             category as ResourceCategory
                                         )
                                     }
+                                    className={
+                                        selectedCategory === category
+                                            ? "bg-[#3CCBC9]"
+                                            : ""
+                                    }
                                 >
                                     {data.name}
                                 </Button>
                             )
                         )}
                     </div>
-                </div>
+                </motion.div>
 
                 {/* Search Results */}
                 {searchTerm && (
-                    <Card className="mb-8">
-                        <CardContent className="p-4">
-                            <div className="flex items-center gap-2 text-sm">
-                                <FileText size={16} className="text-primary" />
-                                <span>
-                                    Showing resources matching{" "}
-                                    <strong>"{searchTerm}"</strong>
-                                </span>
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                    >
+                        <Card className="mb-8 border border-gray-200 shadow-sm">
+                            <CardContent className="p-4">
+                                <div className="flex items-center gap-2 text-sm">
+                                    <FileText
+                                        size={16}
+                                        className="text-[#3CCBC9]"
+                                    />
+                                    <span>
+                                        Showing resources matching{" "}
+                                        <strong>"{searchTerm}"</strong>
+                                    </span>
 
-                                <div className="ml-auto">
-                                    <Button
-                                        variant="ghost"
-                                        size="sm"
-                                        className="h-8 text-xs"
-                                        asChild
-                                    >
-                                        <a
-                                            href={`https://drive.google.com/drive/folders/1C1CqKbGPuV8DbyauffOUOBS8Fg3mGV3j?q=${encodeURIComponent(
-                                                searchTerm
-                                            )}`}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
+                                    <div className="ml-auto">
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            className="h-8 text-xs text-[#3CCBC9]"
+                                            asChild
                                         >
-                                            Search in Google Drive
-                                        </a>
-                                    </Button>
+                                            <a
+                                                href={`https://drive.google.com/drive/folders/1C1CqKbGPuV8DbyauffOUOBS8Fg3mGV3j?q=${encodeURIComponent(
+                                                    searchTerm
+                                                )}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                Search in Google Drive
+                                            </a>
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                            </CardContent>
+                        </Card>
+                    </motion.div>
                 )}
 
                 {/* Resources Grid */}
@@ -206,15 +298,20 @@ export default function ResourcesPage() {
                         ))}
                     </motion.div>
                 ) : (
-                    <div className="text-center py-12">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5, delay: 0.2 }}
+                        className="text-center py-12"
+                    >
                         <FileText
                             size={48}
-                            className="mx-auto text-muted-foreground mb-4 opacity-50"
+                            className="mx-auto text-gray-300 mb-4"
                         />
-                        <h3 className="text-xl font-medium mb-2">
+                        <h3 className="text-xl font-medium mb-2 text-gray-800">
                             No resources found
                         </h3>
-                        <p className="text-muted-foreground mb-4">
+                        <p className="text-gray-500 mb-4">
                             Try adjusting your search or category filters
                         </p>
                         <Button
@@ -226,7 +323,7 @@ export default function ResourcesPage() {
                         >
                             Clear filters
                         </Button>
-                    </div>
+                    </motion.div>
                 )}
             </div>
         </>

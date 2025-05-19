@@ -49,27 +49,31 @@ export default function HeroSection({
     };
 
     return (
-        <section className={`relative overflow-hidden bg-white ${sizeClasses[size]}`}>
+        <section
+            className={`relative overflow-hidden bg-white ${sizeClasses[size]}`}
+        >
             {/* Background Pattern */}
             {bgPattern && (
                 <div className="absolute inset-0 overflow-hidden opacity-10">
-                    <div className="absolute top-0 -left-4 w-72 h-72 bg-teal-300 rounded-full filter blur-3xl" />
-                    <div className="absolute bottom-0 -right-4 w-72 h-72 bg-teal-200 rounded-full filter blur-3xl" />
+                    <div className="absolute top-0 -left-4 w-72 h-72 bg-[#3CCBC9] rounded-full filter blur-3xl" />
+                    <div className="absolute bottom-0 -right-4 w-72 h-72 bg-[#935DFD] rounded-full filter blur-3xl" />
                 </div>
             )}
 
             <div className="container mx-auto px-4">
                 <motion.div
-                    className={`max-w-3xl ${centered ? "mx-auto text-center" : ""
-                        }`}
+                    className={`max-w-3xl ${
+                        centered ? "mx-auto text-center" : ""
+                    }`}
                     initial="hidden"
                     animate="visible"
                     variants={containerVariants}
                 >
                     {/* Title */}
                     <motion.h1
-                        className={`text-5xl md:text-7xl font-bold mb-4 text-teal-500 ${gradient ? "gradient-text" : ""
-                            }`}
+                        className={`text-5xl md:text-7xl font-bold mb-4 ${
+                            gradient ? "gradient-text" : "text-gray-800"
+                        }`}
                         variants={itemVariants}
                     >
                         {title}
@@ -89,7 +93,7 @@ export default function HeroSection({
                             <Button
                                 variant="gradient"
                                 size="lg"
-                                className="font-medium"
+                                className="font-medium mt-6"
                                 asChild
                             >
                                 <a href={ctaLink}>

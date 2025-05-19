@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { MessageCircle, Info, ExternalLink } from "lucide-react";
+import { MessageSquare, Info, ExternalLink, Sparkles } from "lucide-react";
 import HeroSection from "@/components/layout/hero-section";
 import ChatInterface from "@/components/chat/chat-interface";
 import { Card, CardContent } from "@/components/ui/card";
@@ -63,58 +63,58 @@ export default function ChatPage() {
                         className="lg:col-span-1 space-y-6"
                     >
                         {/* About AI Guide */}
-                        <Card className="bg-card/40 backdrop-blur-sm border-border">
+                        <Card className="bg-white backdrop-blur-sm border-gray-200 shadow-sm">
                             <CardContent className="p-6">
                                 <div className="flex items-center space-x-3 mb-4">
-                                    <div className="p-2 rounded-full bg-primary/10">
+                                    <div className="p-2 rounded-full bg-[#3CCBC9]/10">
                                         <Info
                                             size={18}
-                                            className="text-primary text-teal-500"
+                                            className="text-[#3CCBC9]"
                                         />
                                     </div>
-                                    <h3 className="text-lg font-medium text-teal-500">
+                                    <h3 className="text-lg font-medium text-gray-800">
                                         About AI Guide
                                     </h3>
                                 </div>
 
-                                <p className="text-sm text-muted-foreground mb-4">
+                                <p className="text-sm text-gray-500 mb-4">
                                     The AI Guide helps you navigate Tefline's
                                     resources and features. It can:
                                 </p>
 
                                 <ul className="space-y-2 text-sm">
                                     <li className="flex items-start">
-                                        <span className="text-primary mr-2">
+                                        <span className="text-[#3CCBC9] mr-2">
                                             •
                                         </span>
-                                        <span>
+                                        <span className="text-gray-600">
                                             Explain how to use our Google Drive
                                             resources
                                         </span>
                                     </li>
                                     <li className="flex items-start">
-                                        <span className="text-primary mr-2">
+                                        <span className="text-[#3CCBC9] mr-2">
                                             •
                                         </span>
-                                        <span>
+                                        <span className="text-gray-600">
                                             Guide you on how to use the
                                             specialized AI tools
                                         </span>
                                     </li>
                                     <li className="flex items-start">
-                                        <span className="text-primary mr-2">
+                                        <span className="text-[#3CCBC9] mr-2">
                                             •
                                         </span>
-                                        <span>
+                                        <span className="text-gray-600">
                                             Answer basic questions about
                                             wellness and lifestyle medicine
                                         </span>
                                     </li>
                                     <li className="flex items-start">
-                                        <span className="text-primary mr-2">
+                                        <span className="text-[#3CCBC9] mr-2">
                                             •
                                         </span>
-                                        <span>
+                                        <span className="text-gray-600">
                                             Help you track your progress toward
                                             your wellness goals
                                         </span>
@@ -124,16 +124,16 @@ export default function ChatPage() {
                         </Card>
 
                         {/* Suggested Questions */}
-                        <Card className="bg-card/40 backdrop-blur-sm border-border">
+                        <Card className="bg-white backdrop-blur-sm border-gray-200 shadow-sm">
                             <CardContent className="p-6">
                                 <div className="flex items-center space-x-3 mb-4">
-                                    <div className="p-2 rounded-full bg-primary/10">
-                                        <MessageCircle
+                                    <div className="p-2 rounded-full bg-[#3CCBC9]/10">
+                                        <MessageSquare
                                             size={18}
-                                            className="text-primary text-teal-500"
+                                            className="text-[#3CCBC9]"
                                         />
                                     </div>
-                                    <h3 className="text-lg font-medium text-teal-500">
+                                    <h3 className="text-lg font-medium text-gray-800">
                                         Try Asking
                                     </h3>
                                 </div>
@@ -143,7 +143,7 @@ export default function ChatPage() {
                                         (prompt, index) => (
                                             <li
                                                 key={index}
-                                                className="text-sm bg-secondary/30 p-3 rounded-md"
+                                                className="text-sm bg-[#3CCBC9]/5 p-3 rounded-md text-gray-600"
                                             >
                                                 "{prompt}"
                                             </li>
@@ -154,21 +154,21 @@ export default function ChatPage() {
                         </Card>
 
                         {/* Specialized AI Tools */}
-                        <Card className="bg-card/40 backdrop-blur-sm border-border">
+                        <Card className="bg-white backdrop-blur-sm border-gray-200 shadow-sm">
                             <CardContent className="p-6">
                                 <div className="flex items-center space-x-3 mb-4">
-                                    <div className="p-2 rounded-full bg-primary/10">
-                                        <ExternalLink
+                                    <div className="p-2 rounded-full bg-[#3CCBC9]/10">
+                                        <Sparkles
                                             size={18}
-                                            className="text-primary text-teal-500"
+                                            className="text-[#3CCBC9]"
                                         />
                                     </div>
-                                    <h3 className="text-lg font-medium text-teal-500">
+                                    <h3 className="text-lg font-medium text-gray-800">
                                         Specialized AI Tools
                                     </h3>
                                 </div>
 
-                                <p className="text-sm text-muted-foreground mb-4">
+                                <p className="text-sm text-gray-500 mb-4">
                                     For more in-depth, specialized guidance, try
                                     our dedicated AI tools:
                                 </p>
@@ -177,8 +177,8 @@ export default function ChatPage() {
                                     {AI_TOOLS.map((tool) => (
                                         <Button
                                             key={tool.id}
-                                            variant="glass"
-                                            className="w-full justify-start"
+                                            variant="outline"
+                                            className="w-full justify-start hover:bg-[#3CCBC9]/10 hover:text-[#3CCBC9] hover:border-[#3CCBC9]"
                                             asChild
                                         >
                                             <a

@@ -22,12 +22,12 @@ export default function DriveLink({
     return (
         <div className="bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
             <div className="flex items-start space-x-4">
-                <div className="p-3 bg-teal-50 rounded-full">
-                    <FileIcon className="h-6 w-6 text-teal-500" />
+                <div className="p-3 bg-[#3CCBC9]/10 rounded-full">
+                    <FileIcon className="h-6 w-6 text-[#3CCBC9]" />
                 </div>
 
                 <div className="flex-grow">
-                    <h3 className="text-lg font-medium text-teal-500 mb-1">
+                    <h3 className="text-lg font-medium text-gray-800 mb-1">
                         {searchTerm
                             ? `Google Drive: ${searchTerm}`
                             : "Google Drive Resources"}
@@ -41,7 +41,7 @@ export default function DriveLink({
                     <Button
                         variant="outline"
                         size="sm"
-                        className="group"
+                        className="group border-[#3CCBC9]/30 text-[#3CCBC9] hover:bg-[#3CCBC9]/10 hover:border-[#3CCBC9]"
                         asChild
                     >
                         <a
@@ -68,11 +68,11 @@ export default function DriveLink({
             </div>
 
             {showTips && (
-                <div className="mt-4 bg-gray-50 rounded-md p-3">
+                <div className="mt-4 bg-[#3CCBC9]/5 rounded-md p-3">
                     <div className="flex items-start space-x-2">
                         <Info
                             size={16}
-                            className="text-teal-500 mt-0.5 flex-shrink-0"
+                            className="text-[#3CCBC9] mt-0.5 flex-shrink-0"
                         />
                         <div>
                             <h4 className="text-sm font-medium text-gray-700 mb-1">

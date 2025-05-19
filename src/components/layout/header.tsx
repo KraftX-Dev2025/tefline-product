@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { Menu, Bell, Search, User, X } from "lucide-react";
+import { Menu, Bell, User } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -50,6 +50,17 @@ export default function Header({
         { name: "Register", href: "/register" },
     ];
 
+    // Get page title based on pathname
+    const getPageTitle = () => {
+        if (pathname === "/") return "Dashboard";
+        if (pathname === "/help") return "Help Center";
+        if (pathname === "/settings") return "Settings";
+
+        // Convert pathname to title case
+        const title = pathname.split("/")[1];
+        return title.charAt(0).toUpperCase() + title.slice(1);
+    };
+
     return (
         <header
             className={cn(
@@ -73,22 +84,27 @@ export default function Header({
                         </Button>
                     )}
 
-                    <Link href="/" className="flex items-center">
-                        <div className="w-8 h-8 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center text-white font-bold">
-                            T
+                    <Link href="/" className="flex items-center md:hidden">
+                        <div className="w-8 h-8 flex items-center justify-center">
+                            <Image
+                                src="/favicon.png"
+                                alt="Tefline Logo"
+                                width={32}
+                                height={32}
+                            />
                         </div>
-                        <span className="ml-2 text-xl font-bold text-teal-600 hidden md:block">
-                            Tefline
-                        </span>
                     </Link>
+
+                    {/* Page title for desktop */}
+                    <h1 className="text-xl font-semibold text-gray-800 ml-2 hidden md:block">
+                        {getPageTitle()}
+                    </h1>
                 </div>
 
                 {/* Center - Page title for mobile */}
                 <div className="md:hidden">
-                    <h1 className="text-lg font-medium text-gray-800 capitalize">
-                        {pathname === "/"
-                            ? "Dashboard"
-                            : pathname.split("/")[1]}
+                    <h1 className="text-lg font-medium text-gray-800">
+                        {getPageTitle()}
                     </h1>
                 </div>
 
@@ -97,14 +113,6 @@ export default function Header({
                     <div className="flex items-center space-x-3">
                         {isLoggedIn ? (
                             <>
-                                <Button
-                                    variant="ghost"
-                                    size="icon"
-                                    className="relative"
-                                >
-                                    <Search size={20} />
-                                </Button>
-
                                 <Button
                                     variant="ghost"
                                     size="icon"
@@ -119,7 +127,7 @@ export default function Header({
                                 </Button>
 
                                 <Link href="/profile">
-                                    <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-medium">
+                                    <div className="w-8 h-8 bg-gradient-to-r from-[#3CCBC9]/20 to-[#935DFD]/20 rounded-full flex items-center justify-center text-[#3CCBC9] font-medium">
                                         U
                                     </div>
                                 </Link>

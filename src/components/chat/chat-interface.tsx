@@ -5,7 +5,7 @@ import {
     Plus,
     RefreshCw,
     Clock,
-    MessageCircle,
+    MessageSquare,
     Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -147,11 +147,11 @@ export default function ChatInterface() {
             {/* Chat Header */}
             <div className="flex items-center justify-between p-4 border-b border-gray-200 bg-white">
                 <div className="flex items-center space-x-3">
-                    <div className="w-10 h-10 rounded-full bg-teal-50 flex items-center justify-center">
-                        <Sparkles size={18} className="text-teal-500" />
+                    <div className="w-10 h-10 rounded-full bg-[#3CCBC9]/10 flex items-center justify-center">
+                        <Sparkles size={18} className="text-[#3CCBC9]" />
                     </div>
                     <div>
-                        <h3 className="font-medium text-teal-500">AI Guide</h3>
+                        <h3 className="font-medium text-[#3CCBC9]">AI Guide</h3>
                         <p className="text-xs text-gray-500">
                             Your wellness assistant
                         </p>
@@ -195,13 +195,13 @@ export default function ChatInterface() {
                         className="flex items-center space-x-2 text-sm text-gray-500"
                     >
                         <div className="flex space-x-1">
-                            <span className="animate-pulse bg-teal-300 rounded-full w-2 h-2"></span>
+                            <span className="animate-pulse bg-[#3CCBC9] rounded-full w-2 h-2"></span>
                             <span
-                                className="animate-pulse bg-teal-300 rounded-full w-2 h-2"
+                                className="animate-pulse bg-[#3CCBC9] rounded-full w-2 h-2"
                                 style={{ animationDelay: "0.2s" }}
                             ></span>
                             <span
-                                className="animate-pulse bg-teal-300 rounded-full w-2 h-2"
+                                className="animate-pulse bg-[#3CCBC9] rounded-full w-2 h-2"
                                 style={{ animationDelay: "0.4s" }}
                             ></span>
                         </div>
@@ -216,7 +216,7 @@ export default function ChatInterface() {
             {messages.length <= 2 && (
                 <div className="px-4 py-3 border-t border-gray-200 bg-white">
                     <h4 className="text-xs font-medium text-gray-500 mb-2 flex items-center">
-                        <MessageCircle size={12} className="mr-1" />
+                        <MessageSquare size={12} className="mr-1" />
                         Suggested questions
                     </h4>
                     <div className="flex flex-wrap gap-2">
@@ -226,7 +226,7 @@ export default function ChatInterface() {
                                     key={index}
                                     variant="outline"
                                     size="sm"
-                                    className="text-xs py-1 h-auto"
+                                    className="text-xs py-1 h-auto text-[#3CCBC9] border-[#3CCBC9]/30 hover:bg-[#3CCBC9]/10"
                                     onClick={() => sendMessage(prompt)}
                                 >
                                     {prompt}
@@ -265,7 +265,7 @@ export default function ChatInterface() {
                         type="submit"
                         variant="default"
                         size="icon"
-                        className="flex-shrink-0 bg-teal-300 hover:bg-teal-400"
+                        className="flex-shrink-0 bg-[#3CCBC9] hover:bg-[#35b5b3]"
                         disabled={!inputMessage.trim() || isLoading}
                     >
                         <Send size={18} />

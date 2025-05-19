@@ -10,19 +10,19 @@ const buttonVariants = cva(
         variants: {
             variant: {
                 default:
-                    "bg-teal-400 text-white font-bold hover:bg-teal-500 shadow-sm hover:shadow transition-all",
+                    "bg-[#3CCBC9] text-white font-bold hover:bg-[#35b5b3] shadow-sm hover:shadow transition-all",
                 destructive:
                     "bg-destructive text-destructive-foreground font-bold hover:bg-destructive/90 shadow-sm",
                 outline:
-                    "border-2 border-gray-200 bg-white text-gray-800 hover:bg-gray-50 hover:border-teal-300 hover:text-teal-600 font-medium",
+                    "border-2 border-gray-200 bg-white text-gray-800 hover:bg-gray-50 hover:border-[#3CCBC9] hover:text-[#3CCBC9] font-medium",
                 secondary:
-                    "bg-teal-100 text-teal-800 font-medium hover:bg-teal-200 shadow-sm",
-                ghost: "hover:bg-teal-50 hover:text-teal-700",
-                link: "text-teal-600 underline-offset-4 hover:underline font-medium",
+                    "bg-[#3CCBC9]/20 text-[#3CCBC9] font-medium hover:bg-[#3CCBC9]/30 shadow-sm",
+                ghost: "hover:bg-[#3CCBC9]/10 hover:text-[#3CCBC9]",
+                link: "text-[#3CCBC9] underline-offset-4 hover:underline font-medium",
                 gradient:
-                    "bg-gradient-to-r from-teal-400 to-teal-600 text-white font-bold hover:opacity-90 shadow-sm hover:shadow-md hover:from-teal-500 hover:to-teal-700",
+                    "bg-gradient-to-r from-[#3CCBC9] to-[#935DFD] text-white font-bold hover:opacity-90 shadow-sm hover:shadow-md",
                 glass: "bg-white/80 backdrop-blur-md hover:bg-white/90 text-gray-800 border border-gray-200 shadow-sm",
-                icon: "bg-teal-50 text-teal-600 hover:bg-teal-100 hover:text-teal-700 p-0",
+                icon: "bg-[#3CCBC9]/10 text-[#3CCBC9] hover:bg-[#3CCBC9]/20 hover:text-[#3CCBC9] p-0",
             },
             size: {
                 default: "h-10 px-4 py-2",

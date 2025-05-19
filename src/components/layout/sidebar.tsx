@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import {
     Home,
     BookOpen,
     BrainCircuit,
     MessageSquare,
     User,
-    BarChart2,
     Settings,
     LogOut,
     HelpCircle,
@@ -41,8 +41,8 @@ const NavItem = ({
                 className={cn(
                     "relative flex flex-col items-center justify-center p-3 rounded-xl transition-all w-full group-hover:bg-teal-50",
                     isActive
-                        ? "bg-teal-100 text-teal-600"
-                        : "text-gray-500 hover:text-teal-600"
+                        ? "bg-teal-100 text-[#3CCBC9]"
+                        : "text-gray-500 hover:text-[#3CCBC9]"
                 )}
             >
                 <Icon size={20} className="mb-1" />
@@ -51,7 +51,7 @@ const NavItem = ({
                 {isActive && (
                     <motion.div
                         layoutId="activeNavIndicator"
-                        className="absolute left-0 w-1 h-8 bg-teal-500 rounded-r-full top-1/2 -translate-y-1/2"
+                        className="absolute left-0 w-1 h-8 bg-gradient-to-b from-[#3CCBC9] to-[#935DFD] rounded-r-full top-1/2 -translate-y-1/2"
                         transition={{ duration: 0.2 }}
                     />
                 )}
@@ -70,7 +70,6 @@ const Sidebar = () => {
         { icon: BookOpen, label: "Resources", href: "/resources" },
         { icon: BrainCircuit, label: "AI Tools", href: "/ai-tools" },
         { icon: MessageSquare, label: "Chat Guide", href: "/chat" },
-        { icon: BarChart2, label: "Progress", href: "/progress" },
         { icon: User, label: "Profile", href: "/profile" },
     ];
 
@@ -89,11 +88,16 @@ const Sidebar = () => {
         >
             {/* Logo */}
             <div className="px-4 mb-8 flex justify-center items-center">
-                <div className="w-10 h-10 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">
-                    T
+                <div className="w-10 h-10 flex items-center justify-center">
+                    <Image
+                        src="/favicon.png"
+                        alt="Tefline Logo"
+                        width={40}
+                        height={40}
+                    />
                 </div>
                 {expanded && (
-                    <span className="text-xl font-bold text-teal-600 ml-2">
+                    <span className="text-xl font-bold ml-2 gradient-text">
                         Tefline
                     </span>
                 )}
@@ -102,7 +106,7 @@ const Sidebar = () => {
             {/* Toggle button */}
             <button
                 onClick={() => setExpanded(!expanded)}
-                className="absolute right-0 top-8 translate-x-1/2 bg-white border border-gray-200 rounded-full p-1 text-gray-500 hover:text-teal-500"
+                className="absolute right-0 top-8 translate-x-1/2 bg-white border border-gray-200 rounded-full p-1 text-gray-500 hover:text-[#3CCBC9]"
             >
                 <svg
                     width="16"
