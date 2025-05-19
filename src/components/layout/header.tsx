@@ -4,33 +4,38 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import {
-    Menu,
-    X,
-    Home,
-    BookOpen,
-    BrainCircuit,
-    MessageCircle,
-    User,
-} from "lucide-react";
+import { Menu, Bell, Search, User, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { createClient } from "@/utils/supabase/client";
 
-const navItems = [
-    { name: "Home", href: "/", icon: Home },
-    { name: "Resources", href: "/resources", icon: BookOpen },
-    { name: "AI Tools", href: "/ai-tools", icon: BrainCircuit },
-    { name: "Chat", href: "/chat", icon: MessageCircle },
-    { name: "Profile", href: "/profile", icon: User },
-];
+interface HeaderProps {
+    toggleSidebar?: () => void;
+    showSidebarToggle?: boolean;
+}
 
-export default function Header() {
+export default function Header({
+    toggleSidebar,
+    showSidebarToggle = true,
+}: HeaderProps) {
     const pathname = usePathname();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [notifications, setNotifications] = useState(2); // Example notification count
 
     useEffect(() => {
+        const checkAuthStatus = async () => {
+            const supabase = createClient();
+            const { data } = await supabase.auth.getSession();
+            setIsLoggedIn(!!data.session);
+            setLoading(false);
+        };
+
+        checkAuthStatus();
+
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
         };
@@ -39,111 +44,112 @@ export default function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Auth links for non-logged in users
+    const authLinks = [
+        { name: "Login", href: "/login" },
+        { name: "Register", href: "/register" },
+    ];
+
     return (
         <header
             className={cn(
-                "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+                "sticky top-0 left-0 right-0 z-40 transition-all duration-300",
                 isScrolled
                     ? "bg-white/90 backdrop-blur-lg shadow-sm"
                     : "bg-white"
             )}
         >
-            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                <Link href="/" className="flex items-center">
-                    <Image src={"/favicon.png"} alt="Logo" width={60} height={60} />
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <span className="text-2xl font-bold text-teal-500">
+            <div className="flex items-center justify-between h-16 px-4 md:px-6">
+                {/* Left section - Logo & menu toggle */}
+                <div className="flex items-center">
+                    {showSidebarToggle && isLoggedIn && (
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            className="mr-2 md:hidden"
+                            onClick={toggleSidebar}
+                        >
+                            <Menu size={22} />
+                        </Button>
+                    )}
+
+                    <Link href="/" className="flex items-center">
+                        <div className="w-8 h-8 bg-gradient-to-br from-teal-400 to-teal-600 rounded-lg flex items-center justify-center text-white font-bold">
+                            T
+                        </div>
+                        <span className="ml-2 text-xl font-bold text-teal-600 hidden md:block">
                             Tefline
                         </span>
-                    </motion.div>
-                </Link>
-
-                {/* Desktop Navigation */}
-                <nav className="hidden md:flex items-center space-x-8">
-                    {navItems.map((item) => {
-                        const isActive = pathname === item.href;
-                        const Icon = item.icon;
-
-                        return (
-                            <Link
-                                key={item.name}
-                                href={item.href}
-                                className={cn(
-                                    "relative flex items-center space-x-1 text-sm font-medium transition-colors hover:text-teal-500",
-                                    isActive
-                                        ? "text-teal-500"
-                                        : "text-gray-600"
-                                )}
-                            >
-                                <Icon size={16} />
-                                <span>{item.name}</span>
-                                {isActive && (
-                                    <motion.div
-                                        layoutId="activeIndicator"
-                                        className="absolute bottom-[-10px] left-0 right-0 h-[3px] bg-teal-300 rounded-full"
-                                        transition={{ duration: 0.3 }}
-                                    />
-                                )}
-                            </Link>
-                        );
-                    })}
-                </nav>
-
-                {/* Mobile Menu Button */}
-                <div className="md:hidden">
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label="Toggle menu"
-                    >
-                        {isMobileMenuOpen ? (
-                            <X size={24} />
-                        ) : (
-                            <Menu size={24} />
-                        )}
-                    </Button>
+                    </Link>
                 </div>
-            </div>
 
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="md:hidden bg-white border-b border-gray-200"
-                >
-                    <nav className="container mx-auto px-4 py-4 flex flex-col space-y-4">
-                        {navItems.map((item) => {
-                            const isActive = pathname === item.href;
-                            const Icon = item.icon;
+                {/* Center - Page title for mobile */}
+                <div className="md:hidden">
+                    <h1 className="text-lg font-medium text-gray-800 capitalize">
+                        {pathname === "/"
+                            ? "Dashboard"
+                            : pathname.split("/")[1]}
+                    </h1>
+                </div>
 
-                            return (
-                                <Link
-                                    key={item.name}
-                                    href={item.href}
-                                    className={cn(
-                                        "flex items-center space-x-2 p-2 rounded-md",
-                                        isActive
-                                            ? "bg-teal-50 text-teal-500"
-                                            : "text-gray-600 hover:bg-gray-50"
-                                    )}
-                                    onClick={() => setIsMobileMenuOpen(false)}
+                {/* Right section - Actions & user */}
+                {!loading && (
+                    <div className="flex items-center space-x-3">
+                        {isLoggedIn ? (
+                            <>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="relative"
                                 >
-                                    <Icon size={18} />
-                                    <span>{item.name}</span>
+                                    <Search size={20} />
+                                </Button>
+
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="relative"
+                                >
+                                    <Bell size={20} />
+                                    {notifications > 0 && (
+                                        <span className="absolute top-1 right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
+                                            {notifications}
+                                        </span>
+                                    )}
+                                </Button>
+
+                                <Link href="/profile">
+                                    <div className="w-8 h-8 bg-teal-100 rounded-full flex items-center justify-center text-teal-600 font-medium">
+                                        U
+                                    </div>
                                 </Link>
-                            );
-                        })}
-                    </nav>
-                </motion.div>
-            )}
+                            </>
+                        ) : (
+                            <div className="flex space-x-2">
+                                {authLinks.map((link) => (
+                                    <Link key={link.name} href={link.href}>
+                                        <Button
+                                            variant={
+                                                link.name === "Login"
+                                                    ? "outline"
+                                                    : "gradient"
+                                            }
+                                            size="sm"
+                                            className={
+                                                link.name === "Register"
+                                                    ? "font-bold"
+                                                    : ""
+                                            }
+                                        >
+                                            {link.name}
+                                        </Button>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                )}
+            </div>
         </header>
     );
 }

@@ -86,7 +86,9 @@ export default function RegisterForm() {
                 throw error;
             }
         } catch (error: any) {
-            setError(error.message || "An error occurred during Google sign up");
+            setError(
+                error.message || "An error occurred during Google sign up"
+            );
             setGoogleLoading(false);
         }
     };
@@ -96,6 +98,10 @@ export default function RegisterForm() {
     if (success) {
         return (
             <div className="p-6 bg-teal-50 border border-teal-200 rounded-lg text-center">
+                <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <ArrowRight size={24} className="text-teal-600" />
+                </div>
+
                 <h3 className="text-lg font-medium text-teal-700 mb-2">
                     Registration Successful!
                 </h3>
@@ -104,7 +110,7 @@ export default function RegisterForm() {
                 </p>
                 <Button
                     onClick={() => router.push("/login")}
-                    className="bg-teal-600 hover:bg-teal-700"
+                    className="bg-teal-600 hover:bg-teal-700 font-bold"
                 >
                     Go to Login
                 </Button>
@@ -113,79 +119,21 @@ export default function RegisterForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-                <div className="p-3 bg-red-100 border border-red-200 text-red-600 text-sm rounded-md">
-                    {error}
+                <div className="p-3 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg flex items-center">
+                    <div className="w-8 h-8 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0 mr-3">
+                        <span className="text-red-500">!</span>
+                    </div>
+                    <p>{error}</p>
                 </div>
             )}
 
-            <div className="space-y-2">
-                <Label htmlFor="name">Full Name</Label>
-                <Input
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="John Doe"
-                    required
-                    className="bg-white border-slate-200 "
-                />
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="your@email.com"
-                    required
-                    className="bg-white border-slate-200 text-black"
-                />
-            </div>
-
-            <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                    minLength={6}
-                    className="bg-white border-slate-200 text-black"
-                />
-                <p className="text-xs text-slate-500">
-                    Must be at least 6 characters
-                </p>
-            </div>
-
-            <Button
-                type="submit"
-                className="w-full bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-500 hover:to-teal-700 text-white"
-                disabled={loading}
-            >
-                {loading ? (
-                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                ) : (
-                    <>
-                        Create Account <ArrowRight className="ml-2 h-4 w-4" />
-                    </>
-                )}
-            </Button>
-
-            <div className="relative flex items-center justify-center my-4">
-                <div className="border-t border-gray-200 w-full"></div>
-                <div className="bg-white px-3 text-xs text-gray-500 absolute">
-                    OR
-                </div>
-            </div>
-
+            {/* Google Sign Up Button - Moved above the form fields */}
             <Button
                 type="button"
                 variant="outline"
-                className="w-full"
+                className="w-full font-bold flex items-center justify-center h-12"
                 onClick={handleGoogleSignUp}
                 disabled={googleLoading}
             >
@@ -193,7 +141,7 @@ export default function RegisterForm() {
                     <Loader2 className="h-4 w-4 animate-spin mr-2" />
                 ) : (
                     <>
-                        <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
+                        <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
                             <path
                                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                                 fill="#4285F4"
@@ -216,8 +164,76 @@ export default function RegisterForm() {
                 )}
             </Button>
 
+            <div className="relative flex items-center justify-center">
+                <div className="border-t border-gray-200 w-full"></div>
+                <div className="bg-white px-3 text-xs text-gray-500 absolute">
+                    OR REGISTER WITH EMAIL
+                </div>
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="name" className="text-gray-700">
+                    Full Name
+                </Label>
+                <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="John Doe"
+                    required
+                    className="bg-white border-gray-200 h-12"
+                />
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="email" className="text-gray-700">
+                    Email
+                </Label>
+                <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
+                    required
+                    className="bg-white border-gray-200 h-12 text-black"
+                />
+            </div>
+
+            <div className="space-y-2">
+                <Label htmlFor="password" className="text-gray-700">
+                    Password
+                </Label>
+                <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    className="bg-white border-gray-200 h-12 text-black"
+                />
+                <p className="text-xs text-gray-500">
+                    Must be at least 6 characters
+                </p>
+            </div>
+
+            <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-500 hover:to-teal-700 text-white font-bold h-12"
+                disabled={loading}
+            >
+                {loading ? (
+                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                ) : (
+                    <>
+                        Create Account <ArrowRight className="ml-2 h-5 w-5" />
+                    </>
+                )}
+            </Button>
+
             <div className="text-center text-sm">
-                <span className="text-slate-600">Already have an account?</span>{" "}
+                <span className="text-gray-600">Already have an account?</span>{" "}
                 <Link
                     href="/login"
                     className="text-teal-600 hover:underline font-medium"
