@@ -90,6 +90,16 @@ const WelcomeCard = ({ name = "User" }) => {
     );
 };
 
+// Define the types for the QuickAccessCard props
+interface QuickAccessCardProps {
+    title: string;
+    icon: React.ElementType; // For Lucide icons or any component that can be rendered
+    value: string;
+    color: string;
+    href?: string; // Optional since you're using onClick
+    onClick: () => void;
+}
+
 const QuickAccessCard = ({
     title,
     icon: Icon,
@@ -97,7 +107,7 @@ const QuickAccessCard = ({
     color,
     href,
     onClick,
-}) => {
+}: QuickAccessCardProps) => {
     return (
         <motion.div
             whileHover={{ y: -5 }}
@@ -123,7 +133,6 @@ const QuickAccessCard = ({
         </motion.div>
     );
 };
-
 const DailyGoalCard = () => {
     return (
         <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
@@ -369,7 +378,7 @@ export default function Dashboard() {
         checkSession();
     }, [router]);
 
-    const handleCardClick = (destination) => {
+    const handleCardClick = (destination: string) => {
         router.push(destination);
     };
 

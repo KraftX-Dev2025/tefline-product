@@ -13,8 +13,13 @@ import {
 } from "@/lib/types";
 import { saveToLocalStorage } from "@/lib/utils";
 
+// Define a type for the ICONS object
+type IconsType = {
+    [key: string]: string;
+};
+
 // Visual icons for the onboarding options
-const ICONS = {
+const ICONS: IconsType = {
     "Improve sleep quality": "😴",
     "Reduce stress": "😌",
     "Eat healthier": "🥗",

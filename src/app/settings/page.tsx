@@ -31,12 +31,21 @@ import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import HeroSection from "@/components/layout/hero-section";
 
+// Define types for notifications state
+interface NotificationsState {
+    email: boolean;
+    app: boolean;
+    weeklyReport: boolean;
+    goalReminders: boolean;
+    [key: string]: boolean; // Index signature to allow string indexing
+}
+
 export default function SettingsPage() {
     const router = useRouter();
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [isLoading, setIsLoading] = useState(true);
-    const [notifications, setNotifications] = useState({
+    const [notifications, setNotifications] = useState<NotificationsState>({
         email: true,
         app: true,
         weeklyReport: true,
