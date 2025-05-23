@@ -36,12 +36,25 @@ export default function Header({
 
         checkAuthStatus();
 
+        // Listen for auth changes
+        const supabase = createClient();
+        const {
+            data: { subscription },
+        } = supabase.auth.onAuthStateChange((event, session) => {
+            setIsLoggedIn(!!session);
+            setLoading(false);
+        });
+
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 10);
         };
 
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            subscription.unsubscribe();
+        };
     }, []);
 
     // Auth links for non-logged in users
@@ -55,11 +68,21 @@ export default function Header({
         if (pathname === "/") return "Dashboard";
         if (pathname === "/help") return "Help Center";
         if (pathname === "/settings") return "Settings";
+        if (pathname === "/login") return "Login";
+        if (pathname === "/register") return "Register";
+        if (pathname === "/resources") return "Resources";
+        if (pathname === "/ai-tools") return "AI Tools";
+        if (pathname === "/chat") return "Chat Guide";
+        if (pathname === "/profile") return "Profile";
 
         // Convert pathname to title case
         const title = pathname.split("/")[1];
+        if (!title) return "Dashboard";
         return title.charAt(0).toUpperCase() + title.slice(1);
     };
+
+    // Check if user is on auth pages
+    const isOnAuthPage = pathname === "/login" || pathname === "/register";
 
     return (
         <header
@@ -73,7 +96,7 @@ export default function Header({
             <div className="flex items-center justify-between h-16 px-4 md:px-6">
                 {/* Left section - Logo & menu toggle */}
                 <div className="flex items-center">
-                    {showSidebarToggle && isLoggedIn && (
+                    {showSidebarToggle && isLoggedIn && !loading && (
                         <Button
                             variant="ghost"
                             size="icon"
@@ -112,6 +135,7 @@ export default function Header({
                 {!loading && (
                     <div className="flex items-center space-x-3">
                         {isLoggedIn ? (
+                            // Logged in user - show notifications and profile
                             <>
                                 <Button
                                     variant="ghost"
@@ -127,34 +151,44 @@ export default function Header({
                                 </Button>
 
                                 <Link href="/profile">
-                                    <div className="w-8 h-8 bg-gradient-to-r from-[#3CCBC9]/20 to-[#935DFD]/20 rounded-full flex items-center justify-center text-[#3CCBC9] font-medium">
+                                    <div className="w-8 h-8 bg-gradient-to-r from-[#3CCBC9]/20 to-[#935DFD]/20 rounded-full flex items-center justify-center text-[#3CCBC9] font-medium hover:from-[#3CCBC9]/30 hover:to-[#935DFD]/30 transition-all cursor-pointer">
                                         U
                                     </div>
                                 </Link>
                             </>
                         ) : (
-                            <div className="flex space-x-2">
-                                {authLinks.map((link) => (
-                                    <Link key={link.name} href={link.href}>
-                                        <Button
-                                            variant={
-                                                link.name === "Login"
-                                                    ? "outline"
-                                                    : "gradient"
-                                            }
-                                            size="sm"
-                                            className={
-                                                link.name === "Register"
-                                                    ? "font-bold"
-                                                    : ""
-                                            }
-                                        >
-                                            {link.name}
-                                        </Button>
-                                    </Link>
-                                ))}
-                            </div>
+                            // Not logged in - show auth buttons only if not on auth pages
+                            !isOnAuthPage && (
+                                <div className="flex space-x-2">
+                                    {authLinks.map((link) => (
+                                        <Link key={link.name} href={link.href}>
+                                            <Button
+                                                variant={
+                                                    link.name === "Login"
+                                                        ? "outline"
+                                                        : "gradient"
+                                                }
+                                                size="sm"
+                                                className={
+                                                    link.name === "Register"
+                                                        ? "font-bold"
+                                                        : ""
+                                                }
+                                            >
+                                                {link.name}
+                                            </Button>
+                                        </Link>
+                                    ))}
+                                </div>
+                            )
                         )}
+                    </div>
+                )}
+
+                {/* Loading state */}
+                {loading && (
+                    <div className="flex items-center space-x-3">
+                        <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse"></div>
                     </div>
                 )}
             </div>

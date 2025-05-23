@@ -30,7 +30,7 @@ const WelcomeCard = ({ name = "User" }) => {
     };
 
     return (
-        <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-2xl p-6 text-white">
+        <div className="gradient-bg rounded-2xl p-6 text-white">
             <div className="flex items-start justify-between">
                 <div>
                     <h1 className="text-2xl font-bold">
@@ -58,7 +58,7 @@ const WelcomeCard = ({ name = "User" }) => {
                     </div>
                 </div>
 
-                <div className="w-16 h-16 bg-teal-400 bg-opacity-30 rounded-full flex items-center justify-center">
+                <div className="w-16 h-16  rounded-full flex items-center justify-center">
                     <Sun size={28} className="text-white" />
                 </div>
             </div>
@@ -69,11 +69,10 @@ const WelcomeCard = ({ name = "User" }) => {
                     {[1, 2, 3, 4, 5].map((day) => (
                         <div
                             key={day}
-                            className={`w-6 h-6 rounded-full flex items-center justify-center mr-1 ${
-                                day <= 3
-                                    ? "bg-white text-teal-600"
-                                    : "bg-teal-400/30 text-teal-100"
-                            }`}
+                            className={`w-6 h-6 rounded-full flex items-center justify-center mr-1 ${day <= 3
+                                ? "bg-white text-teal-600"
+                                : "bg-teal-400/30 text-teal-100"
+                                }`}
                         >
                             {day <= 3 && <CheckCircle2 size={14} />}
                         </div>
@@ -155,18 +154,16 @@ const DailyGoalCard = () => {
                 ].map((item, i) => (
                     <div
                         key={i}
-                        className={`flex items-center p-3 rounded-lg ${
-                            item.complete
-                                ? "bg-teal-50 text-teal-600"
-                                : "bg-gray-50 text-gray-600"
-                        }`}
+                        className={`flex items-center p-3 rounded-lg ${item.complete
+                            ? "bg-teal-50 text-teal-600"
+                            : "bg-gray-50 text-gray-600"
+                            }`}
                     >
                         <div
-                            className={`w-5 h-5 rounded-full mr-3 flex items-center justify-center ${
-                                item.complete
-                                    ? "bg-teal-400 text-white"
-                                    : "bg-white border border-gray-300"
-                            }`}
+                            className={`w-5 h-5 rounded-full mr-3 flex items-center justify-center ${item.complete
+                                ? "bg-teal-400 text-white"
+                                : "bg-white border border-gray-300"
+                                }`}
                         >
                             {item.complete && <CheckCircle2 size={12} />}
                         </div>
@@ -452,7 +449,7 @@ export default function Dashboard() {
                     <WellnessScoreCard />
 
                     {/* Quick chat access */}
-                    <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl p-5 text-white shadow-sm">
+                    <div className="gradient-bg rounded-xl p-5 text-white shadow-sm">
                         <div className="flex items-start justify-between">
                             <div>
                                 <h3 className="font-medium flex items-center">

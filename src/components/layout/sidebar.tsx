@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -63,6 +63,7 @@ const NavItem = ({
 const Sidebar = () => {
     const pathname = usePathname();
     const [expanded, setExpanded] = useState(true);
+    const [session, setSession] = useState<any>(null);
     const router = useRouter();
 
     const navItems = [
@@ -73,11 +74,25 @@ const Sidebar = () => {
         { icon: User, label: "Profile", href: "/profile" },
     ];
 
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+            setSession(session);
+        };
+        checkSession();
+    }, [router]);
+
     const handleLogout = async () => {
         const supabase = createClient();
         await supabase.auth.signOut();
         router.push("/login");
     };
+
+    // Hide sidebar if not logged in
+    if (!session) return null;
 
     return (
         <div
@@ -104,7 +119,7 @@ const Sidebar = () => {
             </div>
 
             {/* Toggle button */}
-            <button
+            {/* <button
                 onClick={() => setExpanded(!expanded)}
                 className="absolute right-0 top-8 translate-x-1/2 bg-white border border-gray-200 rounded-full p-1 text-gray-500 hover:text-[#3CCBC9]"
             >
@@ -123,7 +138,7 @@ const Sidebar = () => {
                         strokeLinejoin="round"
                     />
                 </svg>
-            </button>
+            </button> */}
 
             {/* Nav Items */}
             <div className="flex-1 px-3 space-y-2 overflow-y-auto">
@@ -152,7 +167,7 @@ const Sidebar = () => {
                     href="/settings"
                     isActive={pathname === "/settings"}
                 />
-                <div className="pt-2 border-t border-gray-100 mt-2">
+                {/* <div className="pt-2 border-t border-gray-100 mt-2">
                     <Button
                         variant="outline"
                         className="w-full justify-start font-medium"
@@ -161,7 +176,7 @@ const Sidebar = () => {
                         <LogOut size={18} className="mr-2" />
                         {expanded ? "Logout" : ""}
                     </Button>
-                </div>
+                </div> */}
             </div>
         </div>
     );

@@ -14,6 +14,7 @@ import {
     Save,
     Sliders,
     Shield,
+    LogOut,
 } from "lucide-react";
 import {
     Card,
@@ -147,6 +148,18 @@ export default function SettingsPage() {
                         >
                             <Shield size={16} className="mr-2" />
                             Security
+                        </TabsTrigger>
+                        <TabsTrigger
+                            value="logout"
+                            className="data-[state=active]:bg-[#3CCBC9]/10 data-[state=active]:text-[#3CCBC9]"
+                            onClick={async () => {
+                                const supabase = createClient();
+                                await supabase.auth.signOut();
+                                router.push("/login");
+                            }}
+                        >
+                            <LogOut size={16} className="mr-2" />
+                            Logout
                         </TabsTrigger>
                     </TabsList>
 
@@ -388,11 +401,10 @@ export default function SettingsPage() {
                                                             ? "default"
                                                             : "outline"
                                                     }
-                                                    className={`flex-1 ${
-                                                        theme === "light"
-                                                            ? "bg-[#3CCBC9]"
-                                                            : ""
-                                                    }`}
+                                                    className={`flex-1 ${theme === "light"
+                                                        ? "bg-[#3CCBC9]"
+                                                        : ""
+                                                        }`}
                                                     onClick={() =>
                                                         handleThemeChange(
                                                             "light"
@@ -412,11 +424,10 @@ export default function SettingsPage() {
                                                             ? "default"
                                                             : "outline"
                                                     }
-                                                    className={`flex-1 ${
-                                                        theme === "dark"
-                                                            ? "bg-[#3CCBC9]"
-                                                            : ""
-                                                    }`}
+                                                    className={`flex-1 ${theme === "dark"
+                                                        ? "bg-[#3CCBC9]"
+                                                        : ""
+                                                        }`}
                                                     onClick={() =>
                                                         handleThemeChange(
                                                             "dark"
@@ -436,11 +447,10 @@ export default function SettingsPage() {
                                                             ? "default"
                                                             : "outline"
                                                     }
-                                                    className={`flex-1 ${
-                                                        theme === "system"
-                                                            ? "bg-[#3CCBC9]"
-                                                            : ""
-                                                    }`}
+                                                    className={`flex-1 ${theme === "system"
+                                                        ? "bg-[#3CCBC9]"
+                                                        : ""
+                                                        }`}
                                                     onClick={() =>
                                                         handleThemeChange(
                                                             "system"
