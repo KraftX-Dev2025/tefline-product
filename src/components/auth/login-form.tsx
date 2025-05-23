@@ -67,7 +67,7 @@ export default function LoginForm() {
             const { error } = await supabase.auth.signInWithOAuth({
                 provider: "google",
                 options: {
-                    redirectTo: `${window.location.origin}/onboarding`,
+                    redirectTo: `/onboarding`,
                 },
             });
 
@@ -80,7 +80,7 @@ export default function LoginForm() {
         }
     };
 
-    if (checkingSession) return null; // Prevent showing form while checking
+    if (checkingSession) return null;
 
     return (
         <form onSubmit={handleSubmit} className="space-y-5">
