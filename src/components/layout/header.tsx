@@ -55,11 +55,16 @@ export default function Header({
         if (pathname === "/") return "Dashboard";
         if (pathname === "/help") return "Help Center";
         if (pathname === "/settings") return "Settings";
+        if (pathname === "/login") return "Login";
+        if (pathname === "/register") return "Register";
 
         // Convert pathname to title case
         const title = pathname.split("/")[1];
         return title.charAt(0).toUpperCase() + title.slice(1);
     };
+
+    // Check if user is on auth pages
+    const isOnAuthPage = pathname === "/login" || pathname === "/register";
 
     return (
         <header
@@ -133,27 +138,30 @@ export default function Header({
                                 </Link>
                             </>
                         ) : (
-                            <div className="flex space-x-2">
-                                {authLinks.map((link) => (
-                                    <Link key={link.name} href={link.href}>
-                                        <Button
-                                            variant={
-                                                link.name === "Login"
-                                                    ? "outline"
-                                                    : "gradient"
-                                            }
-                                            size="sm"
-                                            className={
-                                                link.name === "Register"
-                                                    ? "font-bold"
-                                                    : ""
-                                            }
-                                        >
-                                            {link.name}
-                                        </Button>
-                                    </Link>
-                                ))}
-                            </div>
+                            // Only show auth buttons if not on auth pages
+                            !isOnAuthPage && (
+                                <div className="flex space-x-2">
+                                    {authLinks.map((link) => (
+                                        <Link key={link.name} href={link.href}>
+                                            <Button
+                                                variant={
+                                                    link.name === "Login"
+                                                        ? "outline"
+                                                        : "gradient"
+                                                }
+                                                size="sm"
+                                                className={
+                                                    link.name === "Register"
+                                                        ? "font-bold"
+                                                        : ""
+                                                }
+                                            >
+                                                {link.name}
+                                            </Button>
+                                        </Link>
+                                    ))}
+                                </div>
+                            )
                         )}
                     </div>
                 )}

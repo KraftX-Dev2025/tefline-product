@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -63,6 +63,7 @@ const NavItem = ({
 const Sidebar = () => {
     const pathname = usePathname();
     const [expanded, setExpanded] = useState(true);
+    const [session, setSession] = useState<any>(null);
     const router = useRouter();
 
     const navItems = [
@@ -73,11 +74,25 @@ const Sidebar = () => {
         { icon: User, label: "Profile", href: "/profile" },
     ];
 
+    useEffect(() => {
+        const checkSession = async () => {
+            const supabase = createClient();
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+            setSession(session);
+        };
+        checkSession();
+    }, [router]);
+
     const handleLogout = async () => {
         const supabase = createClient();
         await supabase.auth.signOut();
         router.push("/login");
     };
+
+    // Hide sidebar if not logged in
+    if (!session) return null;
 
     return (
         <div
