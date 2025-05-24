@@ -149,9 +149,9 @@ export default function SettingsPage() {
                             <Shield size={16} className="mr-2" />
                             Security
                         </TabsTrigger>
-                        <TabsTrigger
+                        {/* <TabsTrigger
                             value="logout"
-                            className="data-[state=active]:bg-[#3CCBC9]/10 data-[state=active]:text-[#3CCBC9]"
+                            className="data-[state=active]:bg-[#3CCBC9]/10 data-[state=active]:text-[#3CCBC9] text-red-500"
                             onClick={async () => {
                                 const supabase = createClient();
                                 await supabase.auth.signOut();
@@ -160,7 +160,7 @@ export default function SettingsPage() {
                         >
                             <LogOut size={16} className="mr-2" />
                             Logout
-                        </TabsTrigger>
+                        </TabsTrigger> */}
                     </TabsList>
 
                     {/* Profile Settings */}
