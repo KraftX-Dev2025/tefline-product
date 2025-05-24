@@ -96,7 +96,7 @@ export default function Header({
             <div className="flex items-center justify-between h-16 px-4 md:px-6">
                 {/* Left section - Logo & menu toggle */}
                 <div className="flex items-center">
-                    {showSidebarToggle && isLoggedIn && !loading && (
+                    {/* {showSidebarToggle && isLoggedIn && !loading && (
                         <Button
                             variant="ghost"
                             size="icon"
@@ -105,7 +105,7 @@ export default function Header({
                         >
                             <Menu size={22} />
                         </Button>
-                    )}
+                    )} */}
 
                     <Link href="/" className="flex items-center md:hidden">
                         <div className="w-8 h-8 flex items-center justify-center">
