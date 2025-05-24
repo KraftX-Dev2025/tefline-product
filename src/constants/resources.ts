@@ -1,4 +1,5 @@
 import { Resource, ResourceCategory } from "@/lib/types";
+import { MessageSquare, Book, FileText, Heart, Brain, Sparkles, CheckCircle2, Sun, Moon, Globe, User, Bell, Sliders, Shield } from "lucide-react";
 
 // Google Drive folder URL
 export const GOOGLE_DRIVE_FOLDER_URL =
@@ -128,3 +129,266 @@ export const RESOURCE_SEARCH_TIPS = [
     'Use quotation marks for exact phrases, e.g., "meal planning"',
     "Filter results by file type using 'type:pdf' or 'type:doc' in your search",
 ];
+
+export const helpCategories = [
+    {
+        title: "Getting Started",
+        icon: Book,
+        description:
+            "Learn the basics of Tefline and how to use the platform",
+        articles: [
+            "Welcome to Tefline",
+            "Setting up your profile",
+            "Understanding your dashboard",
+        ],
+    },
+    {
+        title: "Resources",
+        icon: FileText,
+        description: "Learn how to find and use wellness resources",
+        articles: [
+            "Browsing the resource library",
+            "Using Google Drive integration",
+            "Resource categories explained",
+        ],
+    },
+    {
+        title: "AI Tools",
+        icon: MessageSquare,
+        description: "Guides for using our specialized AI wellness tools",
+        articles: [
+            "Getting started with Lifestyle Digital",
+            "Cognitive Counselor tutorial",
+            "Using the AI Chat Guide",
+        ],
+    },
+];
+
+
+export const faqItems = [
+    {
+        question: "How do I access my wellness resources?",
+        answer: "You can access all wellness resources through the Resources page. Our curated content is organized by categories and stored in a Google Drive folder for easy access.",
+    },
+    {
+        question: "What is Lifestyle Digital?",
+        answer: "Lifestyle Digital is our specialized AI tool that provides personalized wellness recommendations based on lifestyle medicine principles. It's great for questions about nutrition, exercise, sleep, and stress management.",
+    },
+    {
+        question: "How do I track my progress?",
+        answer: "Your progress is automatically tracked on your Dashboard. You can view your wellness score, completed goals, and activity history to monitor your wellness journey.",
+    },
+    {
+        question: "Can I use Tefline on mobile devices?",
+        answer: "Yes, Tefline is fully responsive and works on all devices including smartphones and tablets.",
+    },
+];
+
+export const loginIcons = [
+    {
+        icon: Heart,
+        size: 32,
+        x: "20%",
+        y: "30%",
+        color: "text-red-400/40",
+    },
+    {
+        icon: Brain,
+        size: 40,
+        x: "70%",
+        y: "40%",
+        color: "text-teal-500/30",
+    },
+    {
+        icon: Sparkles,
+        size: 36,
+        x: "40%",
+        y: "70%",
+        color: "text-amber-400/30",
+    },
+    {
+        icon: CheckCircle2,
+        size: 28,
+        x: "60%",
+        y: "20%",
+        color: "text-green-500/30",
+    },
+];
+
+export const loginAppBenefits = [
+    "Evidence-based",
+    "Personalized",
+    "AI-powered",
+    "Community-driven",
+];
+
+export const settingsPageOptions = [
+    "Nutrition",
+    "Fitness",
+    "Mental health",
+    "Sleep",
+    "Meditation"
+];
+
+export const settingsPageFeats = [
+    {
+        id: "email",
+        label: "Email Notifications",
+        description:
+            "Receive updates and reports via email",
+    },
+    {
+        id: "app",
+        label: "In-App Notifications",
+        description:
+            "Get notified about activities within the platform",
+    },
+    {
+        id: "weeklyReport",
+        label: "Weekly Progress Reports",
+        description:
+            "Receive a summary of your wellness journey each week",
+    },
+    {
+        id: "goalReminders",
+        label: "Goal Reminders",
+        description:
+            "Get reminders about your wellness goals and tasks",
+    },
+]
+
+export const tabsConfig = [
+    {
+        value: "profile",
+        icon: User,
+        label: "Profile"
+    },
+    {
+        value: "notifications",
+        icon: Bell,
+        label: "Notifications"
+    },
+    {
+        value: "appearance",
+        icon: Sliders,
+        label: "Appearance"
+    },
+    {
+        value: "security",
+        icon: Shield,
+        label: "Security"
+    }
+];
+
+export const themeOptions = [
+    {
+        value: "light",
+        icon: Sun,
+        label: "Light"
+    },
+    {
+        value: "dark",
+        icon: Moon,
+        label: "Dark"
+    },
+    {
+        value: "system",
+        icon: Globe,
+        label: "System"
+    }
+];
+
+export const layoutOptions = [
+    {
+        name: "Compact",
+        height: "16",
+        contentHeight: "8",
+        gridHeight: "12",
+        selected: true
+    },
+    {
+        name: "Comfortable",
+        height: "24",
+        contentHeight: "12",
+        gridHeight: "16",
+        selected: false
+    }
+];
+
+export const securityConnectedAccounts = [
+    {
+        id: "google",
+        name: "Google Account",
+        status: "Connected",
+        action: "Disconnect",
+        bgColor: "bg-blue-100",
+        iconColor: "text-blue-500",
+        icon: `<svg viewBox="0 0 24 24">
+            <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+            <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+            <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+            <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+        </svg>`
+    }
+];
+
+// Additional notification types that can be added later
+export const additionalNotificationTypes = [
+    {
+        id: "achievements",
+        label: "Achievement Notifications",
+        description: "Get notified when you reach milestones and achievements",
+    },
+    {
+        id: "socialUpdates",
+        label: "Social Updates",
+        description: "Notifications about friends' activities and community posts",
+    },
+    {
+        id: "systemUpdates",
+        label: "System Updates",
+        description: "Important updates about the platform and new features",
+    }
+];
+
+// Additional wellness interests that can be added
+export const additionalWellnessInterests = [
+    "Yoga",
+    "Mindfulness",
+    "Weight Management",
+    "Stress Management",
+    "Hydration",
+    "Breathing Exercises",
+    "Time Management",
+    "Self-Care"
+];
+
+// Security settings configuration
+export const securitySettings = {
+    passwordRequirements: [
+        "At least 8 characters long",
+        "Include uppercase and lowercase letters",
+        "Include at least one number",
+        "Include at least one special character"
+    ],
+    twoFactorMethods: [
+        {
+            id: "sms",
+            name: "SMS Authentication",
+            description: "Receive codes via text message",
+            enabled: false
+        },
+        {
+            id: "authenticator",
+            name: "Authenticator App",
+            description: "Use apps like Google Authenticator or Authy",
+            enabled: false
+        },
+        {
+            id: "email",
+            name: "Email Authentication",
+            description: "Receive codes via email",
+            enabled: true
+        }
+    ]
+};

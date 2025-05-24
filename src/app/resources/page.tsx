@@ -98,7 +98,7 @@ export default function ResourcesPage() {
 
                                 <div className="flex-grow">
                                     <h3 className="text-xl font-bold text-gray-800 mb-2">
-                                        Google Drive Resources
+                                        Air Tenet
                                     </h3>
                                     <p className="text-gray-600 mb-4">
                                         All resources are stored in our Google

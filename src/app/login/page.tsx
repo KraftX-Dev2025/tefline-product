@@ -4,47 +4,16 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Sparkles, Heart, Brain, CheckCircle2 } from "lucide-react";
 import LoginForm from "@/components/auth/login-form";
+import { loginAppBenefits, loginIcons } from "@/constants/resources";
 
 // Visual wellness illustration components
 const WellnessVisual = () => {
     return (
         <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-br from-teal-400/10 via-teal-500/10 to-teal-600/20 overflow-hidden">
-            {/* Background gradient circles */}
             <div className="absolute top-20 right-20 w-64 h-64 bg-teal-300/20 rounded-full filter blur-3xl"></div>
             <div className="absolute bottom-20 left-20 w-80 h-80 bg-blue-300/10 rounded-full filter blur-3xl"></div>
-
-            {/* Floating wellness icons */}
             <div className="absolute inset-0">
-                {[
-                    {
-                        icon: Heart,
-                        size: 32,
-                        x: "20%",
-                        y: "30%",
-                        color: "text-red-400/40",
-                    },
-                    {
-                        icon: Brain,
-                        size: 40,
-                        x: "70%",
-                        y: "40%",
-                        color: "text-teal-500/30",
-                    },
-                    {
-                        icon: Sparkles,
-                        size: 36,
-                        x: "40%",
-                        y: "70%",
-                        color: "text-amber-400/30",
-                    },
-                    {
-                        icon: CheckCircle2,
-                        size: 28,
-                        x: "60%",
-                        y: "20%",
-                        color: "text-green-500/30",
-                    },
-                ].map((item, i) => (
+                {loginIcons.map((item, i) => (
                     <motion.div
                         key={i}
                         initial={{ opacity: 0 }}
@@ -91,22 +60,17 @@ const WellnessVisual = () => {
                             </div>
                         </div>
 
-                        <h2 className="text-xl font-bold text-white text-center mb-2">
+                        <h2 className="text-xl font-bold text-white/10 text-center mb-2">
                             Wellness Intelligence
                         </h2>
-                        <p className="text-teal-100/80 text-center max-w-xs text-sm">
+                        <p className="text-teal-100/10 text-center max-w-xs text-sm">
                             Your personalized journey to optimize health and
                             wellbeing through AI-powered guidance
                         </p>
 
                         {/* Key benefits */}
                         <div className="grid grid-cols-2 gap-3 mt-8">
-                            {[
-                                "Evidence-based",
-                                "Personalized",
-                                "AI-powered",
-                                "Community-driven",
-                            ].map((benefit, i) => (
+                            {loginAppBenefits.map((benefit, i) => (
                                 <motion.div
                                     key={i}
                                     initial={{ opacity: 0, y: 10 }}
@@ -116,9 +80,9 @@ const WellnessVisual = () => {
                                 >
                                     <CheckCircle2
                                         size={16}
-                                        className="text-teal-300 mr-2"
+                                        className="text-teal-300/10 mr-2"
                                     />
-                                    <span className="text-white text-sm">
+                                    <span className="text-white/10 text-sm">
                                         {benefit}
                                     </span>
                                 </motion.div>
@@ -133,11 +97,9 @@ const WellnessVisual = () => {
 
 export default function LoginPage() {
     const [isMounted, setIsMounted] = useState(false);
-
     useEffect(() => {
         setIsMounted(true);
     }, []);
-
     return (
         <div className="min-h-screen flex items-stretch relative overflow-hidden bg-white">
             {/* Left side - Login form */}
@@ -154,18 +116,16 @@ export default function LoginPage() {
                             Secure Login
                         </div>
 
-                        <h1 className="text-3xl font-bold text-gray-800 mb-2">
+                        <h1 className="text-3xl font-bold text-teal-600 mb-2">
                             Welcome to Tefline
                         </h1>
                         <p className="text-gray-500">
                             Access your wellness intelligence dashboard
                         </p>
                     </motion.div>
-
                     <LoginForm />
                 </div>
             </div>
-
             {/* Right side - Visual illustration */}
             {isMounted && <WellnessVisual />}
         </div>

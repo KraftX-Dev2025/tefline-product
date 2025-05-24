@@ -71,7 +71,7 @@ export default function HeroSection({
                 >
                     {/* Title */}
                     <motion.h1
-                        className={`text-5xl md:text-7xl font-bold mb-4 ${
+                        className={`text-5xl md:text-6xl font-bold py-4 ${
                             gradient ? "gradient-text" : "text-gray-800"
                         }`}
                         variants={itemVariants}
@@ -81,7 +81,7 @@ export default function HeroSection({
 
                     {/* Subtitle */}
                     <motion.p
-                        className="text-xl text-gray-600 mb-0"
+                        className="text-md md:text-xl text-gray-600 mb-0"
                         variants={itemVariants}
                     >
                         {subtitle}

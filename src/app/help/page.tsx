@@ -6,8 +6,6 @@ import {
     HelpCircle,
     Search,
     MessageSquare,
-    Book,
-    FileText,
     ArrowRight,
     RefreshCw,
 } from "lucide-react";
@@ -24,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import HeroSection from "@/components/layout/hero-section";
+import { faqItems, helpCategories } from "@/constants/resources";
 
 export default function HelpPage() {
     const router = useRouter();
@@ -46,61 +45,8 @@ export default function HelpPage() {
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
         // In a real app, this would search the help content
-        console.log("Searching for:", searchQuery);
+        // console.log("Searching for:", searchQuery);
     };
-
-    const helpCategories = [
-        {
-            title: "Getting Started",
-            icon: Book,
-            description:
-                "Learn the basics of Tefline and how to use the platform",
-            articles: [
-                "Welcome to Tefline",
-                "Setting up your profile",
-                "Understanding your dashboard",
-            ],
-        },
-        {
-            title: "Resources",
-            icon: FileText,
-            description: "Learn how to find and use wellness resources",
-            articles: [
-                "Browsing the resource library",
-                "Using Google Drive integration",
-                "Resource categories explained",
-            ],
-        },
-        {
-            title: "AI Tools",
-            icon: MessageSquare,
-            description: "Guides for using our specialized AI wellness tools",
-            articles: [
-                "Getting started with Lifestyle Digital",
-                "Cognitive Counselor tutorial",
-                "Using the AI Chat Guide",
-            ],
-        },
-    ];
-
-    const faqItems = [
-        {
-            question: "How do I access my wellness resources?",
-            answer: "You can access all wellness resources through the Resources page. Our curated content is organized by categories and stored in a Google Drive folder for easy access.",
-        },
-        {
-            question: "What is Lifestyle Digital?",
-            answer: "Lifestyle Digital is our specialized AI tool that provides personalized wellness recommendations based on lifestyle medicine principles. It's great for questions about nutrition, exercise, sleep, and stress management.",
-        },
-        {
-            question: "How do I track my progress?",
-            answer: "Your progress is automatically tracked on your Dashboard. You can view your wellness score, completed goals, and activity history to monitor your wellness journey.",
-        },
-        {
-            question: "Can I use Tefline on mobile devices?",
-            answer: "Yes, Tefline is fully responsive and works on all devices including smartphones and tablets.",
-        },
-    ];
 
     return (
         <>
