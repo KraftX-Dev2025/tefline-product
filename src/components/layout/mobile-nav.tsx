@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/utils/supabase/client";
 
 interface MobileNavProps {
     onQuickActionClick?: () => void;
@@ -20,6 +21,7 @@ interface MobileNavProps {
 
 const MobileNav = ({ onQuickActionClick }: MobileNavProps) => {
     const pathname = usePathname();
+    const [session, setSession] = useState<any>(null);
 
     const navItems = [
         { icon: Home, label: "Home", href: "/" },
@@ -27,6 +29,32 @@ const MobileNav = ({ onQuickActionClick }: MobileNavProps) => {
         { icon: BrainCircuit, label: "AI Tools", href: "/ai-tools" },
         { icon: User, label: "Profile", href: "/profile" },
     ];
+
+    useEffect(() => {
+        const supabase = createClient();
+
+        const getSession = async () => {
+            const {
+                data: { session },
+            } = await supabase.auth.getSession();
+            setSession(session);
+        };
+
+        getSession();
+
+        const { data: listener } = supabase.auth.onAuthStateChange(
+            (_event, session) => {
+                setSession(session);
+            }
+        );
+
+        return () => {
+            listener?.subscription.unsubscribe();
+        };
+    }, []);
+
+    // Only render MobileNav if user is logged in
+    if (!session) return null;
 
     return (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 h-16 md:hidden z-50">

@@ -89,8 +89,8 @@ export default function ProfilePage() {
                         </div>
                     </div>
 
-                    <Button className="bg-teal-300 hover:bg-teal-400 text-white" onClick={handleLogout}>
-                        Logout
+                    <Button variant="outline" className="border-red-400 text-red-400 hover:bg-red-400 hover:text-white hover:border-none" onClick={handleLogout}>
+                        Logout 
                     </Button>
                 </div>
 

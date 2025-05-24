@@ -17,7 +17,6 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/client";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
 interface NavItemProps {
@@ -75,15 +74,25 @@ const Sidebar = () => {
     ];
 
     useEffect(() => {
-        const checkSession = async () => {
-            const supabase = createClient();
+        const supabase = createClient();
+
+        const getSession = async () => {
             const {
                 data: { session },
             } = await supabase.auth.getSession();
             setSession(session);
         };
-        checkSession();
-    }, [router]);
+
+        getSession();
+
+        const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+            setSession(session);
+        });
+
+        return () => {
+            listener?.subscription.unsubscribe();
+        };
+    }, []);
 
     const handleLogout = async () => {
         const supabase = createClient();

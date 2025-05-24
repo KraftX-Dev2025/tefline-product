@@ -28,7 +28,17 @@ export default function RegisterForm() {
             } = await supabase.auth.getSession();
 
             if (session) {
-                router.push("/");
+                const { data: userProfile } = await supabase
+                    .from("profiles")
+                    .select("onboarding_complete")
+                    .eq("id", session.user.id)
+                    .single();
+
+                if (userProfile?.onboarding_complete) {
+                    router.push("/");
+                } else {
+                    router.push("/onboarding");
+                }
             } else {
                 setCheckingSession(false);
             }
@@ -51,7 +61,7 @@ export default function RegisterForm() {
                     data: {
                         full_name: name,
                     },
-                    emailRedirectTo: `${window.location.origin}/profile`,
+                    emailRedirectTo: `${window.location.origin}/onboarding`,
                 },
             });
 
@@ -82,13 +92,9 @@ export default function RegisterForm() {
                 },
             });
 
-            if (error) {
-                throw error;
-            }
+            if (error) throw error;
         } catch (error: any) {
-            setError(
-                error.message || "An error occurred during Google sign up"
-            );
+            setError(error.message || "An error occurred during Google sign up");
             setGoogleLoading(false);
         }
     };
@@ -96,26 +102,8 @@ export default function RegisterForm() {
     if (checkingSession) return null;
 
     if (success) {
-        return (
-            <div className="p-6 bg-teal-50 border border-teal-200 rounded-lg text-center">
-                <div className="w-16 h-16 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <ArrowRight size={24} className="text-teal-600" />
-                </div>
-
-                <h3 className="text-lg font-medium text-teal-700 mb-2">
-                    Registration Successful!
-                </h3>
-                <p className="text-teal-600 mb-4">
-                    Please check your email for confirmation instructions.
-                </p>
-                <Button
-                    onClick={() => router.push("/login")}
-                    className="bg-teal-600 hover:bg-teal-700 font-bold"
-                >
-                    Go to Login
-                </Button>
-            </div>
-        );
+        router.push("/onboarding");
+        return null;
     }
 
     return (
@@ -129,7 +117,6 @@ export default function RegisterForm() {
                 </div>
             )}
 
-            {/* Google Sign Up Button - Moved above the form fields */}
             <Button
                 type="button"
                 variant="outline"
