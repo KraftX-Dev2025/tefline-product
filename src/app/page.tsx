@@ -31,7 +31,7 @@ import { GOOGLE_DRIVE_FOLDER_URL } from "@/constants/resources";
 const TASK_ITEMS: TaskItem[] = [
     {
         id: "explore-resources",
-        title: "Explore Google Drive Resources",
+        title: "Explore Air Tenet",
         description:
             "Browse through our curated collection of wellness resources",
         completed: false,
