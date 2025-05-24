@@ -4,35 +4,8 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, Check } from "lucide-react";
-import { saveToLocalStorage, getFromLocalStorage } from "@/lib/utils";
-
-const MOODS = [
-    {
-        emoji: "😊",
-        label: "Great",
-        color: "bg-green-100 text-green-600 border-green-200",
-    },
-    {
-        emoji: "😌",
-        label: "Good",
-        color: "bg-teal-100 text-teal-600 border-teal-200",
-    },
-    {
-        emoji: "😐",
-        label: "Okay",
-        color: "bg-yellow-100 text-yellow-600 border-yellow-200",
-    },
-    {
-        emoji: "😔",
-        label: "Down",
-        color: "bg-orange-100 text-orange-600 border-orange-200",
-    },
-    {
-        emoji: "😫",
-        label: "Stressed",
-        color: "bg-red-100 text-red-600 border-red-200",
-    },
-];
+import { getFromLocalStorage } from "@/lib/utils";
+import { MOODS } from "@/constants/resources";
 
 interface MoodSelectorProps {
     onMoodSelect?: (mood: { emoji: string; label: string }) => void;

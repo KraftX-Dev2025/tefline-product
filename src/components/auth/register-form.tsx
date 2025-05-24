@@ -219,7 +219,7 @@ export default function RegisterForm() {
                 )}
             </Button>
 
-            <div className="text-center text-sm">
+            {/* <div className="text-center text-sm">
                 <span className="text-gray-600">Already have an account?</span>{" "}
                 <Link
                     href="/login"
@@ -227,7 +227,7 @@ export default function RegisterForm() {
                 >
                     Sign in
                 </Link>
-            </div>
+            </div> */}
         </form>
     );
 }

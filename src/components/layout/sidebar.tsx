@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { sibeBarNavItems } from "@/constants/resources";
 
 interface NavItemProps {
     icon: React.ElementType;
@@ -64,14 +65,6 @@ const Sidebar = () => {
     const [expanded, setExpanded] = useState(true);
     const [session, setSession] = useState<any>(null);
     const router = useRouter();
-
-    const navItems = [
-        { icon: Home, label: "Dashboard", href: "/" },
-        { icon: BookOpen, label: "Resources", href: "/resources" },
-        { icon: BrainCircuit, label: "AI Tools", href: "/ai-tools" },
-        { icon: MessageSquare, label: "Chat Guide", href: "/chat" },
-        { icon: User, label: "Profile", href: "/profile" },
-    ];
 
     useEffect(() => {
         const supabase = createClient();
@@ -151,7 +144,7 @@ const Sidebar = () => {
 
             {/* Nav Items */}
             <div className="flex-1 px-3 space-y-2 overflow-y-auto">
-                {navItems.map((item) => (
+                {sibeBarNavItems.map((item) => (
                     <NavItem
                         key={item.href}
                         icon={item.icon}

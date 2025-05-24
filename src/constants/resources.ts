@@ -1,5 +1,7 @@
 import { Resource, ResourceCategory } from "@/lib/types";
-import { MessageSquare, Book, FileText, Heart, Brain, Sparkles, CheckCircle2, Sun, Moon, Globe, User, Bell, Sliders, Shield } from "lucide-react";
+import { MessageSquare, Book, FileText, Heart, Brain, Sparkles, CheckCircle2, Sun, Moon, Globe, User, Bell, Sliders, Shield, Circle, ArrowRight, Info, Home, BookOpen, BrainCircuit } from "lucide-react";
+import { SUGGESTED_CHATBOT_PROMPTS } from "./chatbot-prompts";
+import { AI_TOOLS } from "./ai-tools";
 
 // Google Drive folder URL
 export const GOOGLE_DRIVE_FOLDER_URL =
@@ -392,3 +394,191 @@ export const securitySettings = {
         }
     ]
 };
+
+export const aiToolsOptions =
+    [
+        {
+            title: "Be Specific",
+            icon: Circle,
+            description:
+                "Provide specific details about your goals and situation for more personalized recommendations.",
+        },
+        {
+            title: "Ask Follow-Ups",
+            icon: ArrowRight,
+            description:
+                "Don't hesitate to ask follow-up questions to dig deeper into topics you're interested in.",
+        },
+        {
+            title: "Combine Topics",
+            icon: MessageSquare,
+            description:
+                "Try asking about multiple wellness aspects at once, such as how nutrition impacts sleep.",
+        },
+    ];
+
+
+export const aiToolSidebarCards = [
+    {
+        id: "about",
+        title: "About AI Guide",
+        icon: Info,
+        description:
+            "The AI Guide helps you navigate Tefline's resources and features. It can:",
+        list: [
+            "Explain how to use our Google Drive resources",
+            "Guide you on how to use the specialized AI tools",
+            "Answer basic questions about wellness and lifestyle medicine",
+            "Help you track your progress toward your wellness goals",
+        ],
+    },
+    {
+        id: "suggestions",
+        title: "Try Asking",
+        icon: MessageSquare,
+        description: null,
+        promptList: SUGGESTED_CHATBOT_PROMPTS,
+    },
+    {
+        id: "tools",
+        title: "Specialized AI Tools",
+        icon: Sparkles,
+        description:
+            "For more in-depth, specialized guidance, try our dedicated AI tools:",
+        toolList: AI_TOOLS,
+    },
+];
+
+export const onBoardinngOptions = [
+    {
+        title: "Relevant Resources",
+        description:
+            "Get access to resources that align with your wellness goals",
+    },
+    {
+        title: "Personalized Journey",
+        description:
+            "Follow a wellness path designed for your specific needs",
+    },
+    {
+        title: "Effective Guidance",
+        description:
+            "Receive AI guidance tailored to your experience level",
+    },
+];
+
+export const registerStats = [
+    {
+        value: "87%",
+        label: "Energy Improvement",
+    },
+    {
+        value: "3.2yr",
+        label: "Bio-Age Reduction",
+    },
+    {
+        value: "92%",
+        label: "Member Retention",
+    },
+];
+
+export const registerFeatures = [
+    {
+        icon: Brain,
+        title: "AI-Powered Wellness",
+    },
+    {
+        icon: Heart,
+        title: "Evidence-Based Health",
+    },
+    {
+        icon: Sparkles,
+        title: "Personalized Journey",
+    },
+    {
+        icon: CheckCircle2,
+        title: "Community Support",
+    },
+];
+
+
+// Array of wellness tips
+export const WELLNESS_TIPS = [
+    {
+        category: "nutrition",
+        text: "Try adding one extra vegetable to your meals today for added nutrients.",
+    },
+    {
+        category: "sleep",
+        text: "Set a consistent sleep schedule. Aim to go to bed and wake up at the same time every day.",
+    },
+    {
+        category: "stress",
+        text: "Practice box breathing: inhale for 4 counts, hold for 4, exhale for 4, hold for 4.",
+    },
+    {
+        category: "movement",
+        text: "Take a 5-minute movement break every hour to refresh your mind and body.",
+    },
+    {
+        category: "hydration",
+        text: "Start your day with a glass of water to rehydrate after sleeping.",
+    },
+    {
+        category: "mindfulness",
+        text: "Take three deep breaths before responding to stressful situations.",
+    },
+    {
+        category: "social",
+        text: "Reach out to a friend or family member you haven't connected with recently.",
+    },
+    {
+        category: "nutrition",
+        text: "Aim to fill half your plate with colorful vegetables and fruits.",
+    },
+];
+
+
+export const MOODS = [
+    {
+        emoji: "😊",
+        label: "Great",
+        color: "bg-green-100 text-green-600 border-green-200",
+    },
+    {
+        emoji: "😌",
+        label: "Good",
+        color: "bg-teal-100 text-teal-600 border-teal-200",
+    },
+    {
+        emoji: "😐",
+        label: "Okay",
+        color: "bg-yellow-100 text-yellow-600 border-yellow-200",
+    },
+    {
+        emoji: "😔",
+        label: "Down",
+        color: "bg-orange-100 text-orange-600 border-orange-200",
+    },
+    {
+        emoji: "😫",
+        label: "Stressed",
+        color: "bg-red-100 text-red-600 border-red-200",
+    },
+];
+
+export const mobileNavItems = [
+    { icon: Home, label: "Home", href: "/" },
+    { icon: BookOpen, label: "Resources", href: "/resources" },
+    { icon: BrainCircuit, label: "AI Tools", href: "/ai-tools" },
+    { icon: User, label: "Profile", href: "/profile" },
+];
+
+
+export const sibeBarNavItems = [
+    { icon: Home, label: "Dashboard", href: "/" },
+    { icon: BookOpen, label: "Resources", href: "/resources" },
+    { icon: BrainCircuit, label: "AI Tools", href: "/ai-tools" },
+    { icon: MessageSquare, label: "Chat Guide", href: "/chat" },
+    { icon: User, label: "Profile", href: "/profile" },
+];

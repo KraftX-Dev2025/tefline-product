@@ -8,6 +8,7 @@ import OnboardingForm from "@/components/onboarding/onboarding-form";
 import { getFromLocalStorage } from "@/lib/utils";
 import { UserProfile } from "@/lib/types";
 import { createClient } from "@/utils/supabase/client";
+import { onBoardinngOptions } from "@/constants/resources";
 
 export default function OnboardingPage() {
     const router = useRouter();
@@ -91,23 +92,7 @@ export default function OnboardingPage() {
                     </p>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                        {[
-                            {
-                                title: "Relevant Resources",
-                                description:
-                                    "Get access to resources that align with your wellness goals",
-                            },
-                            {
-                                title: "Personalized Journey",
-                                description:
-                                    "Follow a wellness path designed for your specific needs",
-                            },
-                            {
-                                title: "Effective Guidance",
-                                description:
-                                    "Receive AI guidance tailored to your experience level",
-                            },
-                        ].map((item, index) => (
+                        {onBoardinngOptions.map((item, index) => (
                             <div
                                 key={index}
                                 className="bg-card/30 p-4 rounded-lg border border-border"

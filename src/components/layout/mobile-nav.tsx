@@ -1,19 +1,15 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import {
-    Home,
-    BookOpen,
-    BrainCircuit,
-    MessageSquare,
-    User,
+    MessageSquare
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client";
+import { mobileNavItems } from "@/constants/resources";
 
 interface MobileNavProps {
     onQuickActionClick?: () => void;
@@ -23,31 +19,20 @@ const MobileNav = ({ onQuickActionClick }: MobileNavProps) => {
     const pathname = usePathname();
     const [session, setSession] = useState<any>(null);
 
-    const navItems = [
-        { icon: Home, label: "Home", href: "/" },
-        { icon: BookOpen, label: "Resources", href: "/resources" },
-        { icon: BrainCircuit, label: "AI Tools", href: "/ai-tools" },
-        { icon: User, label: "Profile", href: "/profile" },
-    ];
-
     useEffect(() => {
         const supabase = createClient();
-
         const getSession = async () => {
             const {
                 data: { session },
             } = await supabase.auth.getSession();
             setSession(session);
         };
-
         getSession();
-
         const { data: listener } = supabase.auth.onAuthStateChange(
             (_event, session) => {
                 setSession(session);
             }
         );
-
         return () => {
             listener?.subscription.unsubscribe();
         };
@@ -59,10 +44,9 @@ const MobileNav = ({ onQuickActionClick }: MobileNavProps) => {
     return (
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 h-16 md:hidden z-50">
             <div className="grid grid-cols-5 h-full relative">
-                {navItems.map((item, index) => {
+                {mobileNavItems.map((item, index) => {
                     const isActive = pathname === item.href;
                     const Icon = item.icon;
-
                     return (
                         <Link
                             key={item.href}

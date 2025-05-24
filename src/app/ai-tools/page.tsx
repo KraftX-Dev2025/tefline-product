@@ -20,6 +20,7 @@ import { getFromLocalStorage, saveToLocalStorage } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { aiToolsOptions } from "@/constants/resources";
 
 export default function AIToolsPage() {
     const [completedTools, setCompletedTools] = useState<string[]>([]);
@@ -174,26 +175,7 @@ export default function AIToolsPage() {
                     </h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {[
-                            {
-                                title: "Be Specific",
-                                icon: Circle,
-                                description:
-                                    "Provide specific details about your goals and situation for more personalized recommendations.",
-                            },
-                            {
-                                title: "Ask Follow-Ups",
-                                icon: ArrowRight,
-                                description:
-                                    "Don't hesitate to ask follow-up questions to dig deeper into topics you're interested in.",
-                            },
-                            {
-                                title: "Combine Topics",
-                                icon: MessageSquare,
-                                description:
-                                    "Try asking about multiple wellness aspects at once, such as how nutrition impacts sleep.",
-                            },
-                        ].map((item, index) => (
+                        {aiToolsOptions.map((item, index) => (
                             <motion.div
                                 key={index}
                                 variants={itemVariants}

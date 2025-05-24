@@ -5,42 +5,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Lightbulb, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-// Array of wellness tips
-const WELLNESS_TIPS = [
-    {
-        category: "nutrition",
-        text: "Try adding one extra vegetable to your meals today for added nutrients.",
-    },
-    {
-        category: "sleep",
-        text: "Set a consistent sleep schedule. Aim to go to bed and wake up at the same time every day.",
-    },
-    {
-        category: "stress",
-        text: "Practice box breathing: inhale for 4 counts, hold for 4, exhale for 4, hold for 4.",
-    },
-    {
-        category: "movement",
-        text: "Take a 5-minute movement break every hour to refresh your mind and body.",
-    },
-    {
-        category: "hydration",
-        text: "Start your day with a glass of water to rehydrate after sleeping.",
-    },
-    {
-        category: "mindfulness",
-        text: "Take three deep breaths before responding to stressful situations.",
-    },
-    {
-        category: "social",
-        text: "Reach out to a friend or family member you haven't connected with recently.",
-    },
-    {
-        category: "nutrition",
-        text: "Aim to fill half your plate with colorful vegetables and fruits.",
-    },
-];
+import { WELLNESS_TIPS } from "@/constants/resources";
 
 interface DailyTipProps {
     onNewTip?: () => void;
