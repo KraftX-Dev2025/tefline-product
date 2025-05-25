@@ -285,7 +285,7 @@ export default function SettingsPage() {
                 bgPattern
                 gradient
                 centered
-                size="sm"
+                size="xs"
             />
 
             <div className="container mx-auto px-4 py-12">

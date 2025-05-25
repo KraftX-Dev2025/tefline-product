@@ -97,7 +97,7 @@ export default function AIToolsPage() {
                 bgPattern
                 gradient
                 centered
-                size="md"
+                size="xs"
             />
 
             <div className="container mx-auto px-4 py-12">

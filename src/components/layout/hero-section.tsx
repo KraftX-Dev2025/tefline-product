@@ -11,7 +11,7 @@ interface HeroSectionProps {
     bgPattern?: boolean;
     gradient?: boolean;
     centered?: boolean;
-    size?: "sm" | "md" | "lg";
+    size?:  "xs" | "sm" | "md" | "lg";
     children?: React.ReactNode;
 }
 
@@ -43,6 +43,7 @@ export default function HeroSection({
     };
 
     const sizeClasses = {
+        xs:"py-8",
         sm: "py-12",
         md: "py-20",
         lg: "py-32",
@@ -71,7 +72,7 @@ export default function HeroSection({
                 >
                     {/* Title */}
                     <motion.h1
-                        className={`text-5xl md:text-6xl font-bold py-4 ${
+                        className={`text-3xl md:text-5xl font-bold py-4 ${
                             gradient ? "gradient-text" : "text-gray-800"
                         }`}
                         variants={itemVariants}
@@ -81,7 +82,7 @@ export default function HeroSection({
 
                     {/* Subtitle */}
                     <motion.p
-                        className="text-md md:text-xl text-gray-600 mb-0"
+                        className="text-sm md:text-lg text-gray-600 mb-0"
                         variants={itemVariants}
                     >
                         {subtitle}

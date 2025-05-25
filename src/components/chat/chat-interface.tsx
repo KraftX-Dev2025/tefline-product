@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, JSX } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Send,
-    Plus,
     RefreshCw,
     Clock,
-    MessageSquare,
     Sparkles,
+    ExternalLink,
+    X,
+    Info,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,11 +19,22 @@ import {
     SUGGESTED_CHATBOT_PROMPTS,
     N8N_WEBHOOK_URL,
 } from "@/constants/chatbot-prompts";
+import { aiToolSidebarCards } from "@/constants/resources";
+
+interface AITool {
+    id: string;
+    title: string;
+    description: string;
+    url: string;
+    icon: string;
+    examplePrompts: string[];
+}
 
 export default function ChatInterface() {
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [inputMessage, setInputMessage] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [openModal, setOpenModal] = useState(null);
     const messageEndRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const messageContainerRef = useRef<HTMLDivElement>(null);
@@ -142,6 +154,94 @@ export default function ChatInterface() {
         saveToLocalStorage("chatMessages", newMessages);
     };
 
+    const openModalHandler = (cardId: any): void => {
+        setOpenModal(cardId);
+    };
+
+    const closeModalHandler = (): void => {
+        setOpenModal(null);
+    };
+
+    const renderModalContent = (card: any): JSX.Element => {
+        switch (card.id) {
+            case "about":
+                return (
+                    <div className="space-y-4">
+                        <p className="text-black">{card.description}</p>
+                        <ul className="space-y-2">
+                            {card.list?.map((item: string, idx: number) => (
+                                <li key={idx} className="flex items-start">
+                                    <span className="text-[#3CCBC9] mr-2 mt-1">•</span>
+                                    <span className="text-gray-600">{item}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                );
+            case "suggestions":
+                return (
+                    <div className="space-y-4">
+                        <p className="text-black mb-4">Try asking these questions:</p>
+                        <div className="space-y-3">
+                            {card.promptList?.map((prompt: string, idx: number) => (
+                                <div
+                                    key={idx}
+                                    className="p-3 bg-[#3CCBC9]/5 rounded-lg border border-[#3CCBC9]/20 cursor-pointer hover:bg-[#3CCBC9]/10 transition-colors"
+                                    onClick={() => {
+                                        sendMessage(prompt);
+                                        closeModalHandler();
+                                    }}
+                                >
+                                    <p className="text-sm text-gray-700">"{prompt}"</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                );
+            case "tools":
+                return (
+                    <div className="space-y-4">
+                        <p className="text-black mb-4">{card.description}</p>
+                        <div className="space-y-3">
+                            {card.toolList?.map((tool: AITool) => (
+                                <div key={tool.id} className="p-4 border border-gray-200 rounded-lg hover:border-[#3CCBC9]/50 transition-colors">
+                                    <div className="flex items-start justify-between mb-2">
+                                        <h4 className="font-medium text-gray-800">{tool.title}</h4>
+                                        <Button
+                                            variant="outline"
+                                            size="sm"
+                                            asChild
+                                            className="hover:bg-teal-600/10 gradient-text gradient-bg border-2 border-amber-500 hover:border-teal-600"
+                                        >
+                                            <a
+                                                href={tool.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="flex items-center gap-1"
+                                            >
+                                                Open Tool
+                                                <ExternalLink size={14} />
+                                            </a>
+                                        </Button>
+                                    </div>
+                                    <p className="text-sm text-gray-600 mb-3">{tool.description}</p>
+                                    <div className="space-y-2">
+                                        <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Example Prompts:</p>
+                                        {tool.examplePrompts.slice(0, 2).map((prompt: string, idx: number) => (
+                                            <p key={idx} className="text-xs text-gray-500 italic">• {prompt}</p>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                );
+            default:
+                return <p>Content not available</p>;
+        }
+    };
+
+
     return (
         <div className="flex flex-col h-[600px] md:h-[700px] bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
             {/* Chat Header */}
@@ -157,16 +257,29 @@ export default function ChatInterface() {
                         </p>
                     </div>
                 </div>
+                {/* Modals for aiToolSidebarCards */}
+                <div className="flex items-center justify-center gap-4 text-center">
+                    {aiToolSidebarCards.map((card) => (
+                        <Button
+                            variant="outline"
+                            key={card.id}
+                            className="rounded-full bg-[#3CCBC9]/10 text-teal-600 hover:bg-teal-600 border-none hover:text-white"
+                            onClick={() => openModalHandler(card.id)}
+                        >
+                            <card.icon size={18} />
+                            {/* <p className="text-sm hidden sm:flex">{card.title}</p> */}
+                        </Button>
+                    ))}
 
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={clearChat}
-                    className="flex items-center text-xs text-gray-500"
-                >
-                    <RefreshCw size={14} className="mr-1" />
-                    Clear chat
-                </Button>
+                    <Button
+                        variant="default"
+                        size="sm"
+                        onClick={clearChat}
+                        className="flex flex-col items-center text-white rounded-2xl hover:bg-teal-200 hover:text-teal-800"
+                    >
+                        <RefreshCw size={14} />
+                    </Button>
+                </div>
             </div>
 
             {/* Chat Messages */}
@@ -215,10 +328,6 @@ export default function ChatInterface() {
             {/* Suggested Prompts */}
             {messages.length <= 2 && (
                 <div className="px-4 py-3 border-t border-gray-200 bg-white">
-                    <h4 className="text-xs font-medium text-gray-500 mb-2 flex items-center">
-                        <MessageSquare size={12} className="mr-1" />
-                        Suggested questions
-                    </h4>
                     <div className="flex flex-wrap gap-2">
                         {SUGGESTED_CHATBOT_PROMPTS.slice(0, 3).map(
                             (prompt, index) => (
@@ -243,14 +352,14 @@ export default function ChatInterface() {
                 className="p-4 border-t border-gray-200 bg-white"
             >
                 <div className="flex space-x-2">
-                    <Button
+                    {/* <Button
                         type="button"
                         variant="ghost"
                         size="icon"
                         className="flex-shrink-0 text-gray-400"
                     >
                         <Plus size={18} />
-                    </Button>
+                    </Button> */}
 
                     <Input
                         ref={inputRef}
@@ -278,7 +387,58 @@ export default function ChatInterface() {
                         Messages are stored locally and not saved on our servers
                     </span>
                 </div>
+
             </form>
+            {/* Modal Overlay */}
+            <AnimatePresence>
+                {openModal && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+                        onClick={closeModalHandler}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                            className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[80vh] overflow-hidden"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            {/* Modal Header */}
+                            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                                <div className="flex items-center space-x-3">
+                                   <div className="p-2 rounded-full bg-[#3CCBC9]/10">
+                                        {(() => {
+                                            const foundCard = aiToolSidebarCards.find((card) => card.id === openModal);
+                                            const IconComponent = foundCard?.icon || Info;
+                                            return <IconComponent size={20} className="text-[#3CCBC9]" />;
+                                        })()}
+                                    </div>
+                                    <h2 className="text-xl font-semibold text-teal-600">
+                                        {aiToolSidebarCards.find(card => card.id === openModal)?.title}
+                                    </h2>
+                                </div>
+                                <Button
+                                    variant="glass"
+                                    size="icon"
+                                    onClick={closeModalHandler}
+                                    className="text-red-500 rounded-sm hover:bg-red-300"
+                                >
+                                    <X size={20} />
+                                </Button>
+                            </div>
+
+                            {/* Modal Content */}
+                            <div className="p-6 overflow-y-auto max-h-[60vh]">
+                                {renderModalContent(aiToolSidebarCards.find(card => card.id === openModal))}
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

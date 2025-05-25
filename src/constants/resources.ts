@@ -1,5 +1,5 @@
 import { Resource, ResourceCategory } from "@/lib/types";
-import { MessageSquare, Book, FileText, Heart, Brain, Sparkles, CheckCircle2, Sun, Moon, Globe, User, Bell, Sliders, Shield, Circle, ArrowRight, Info, Home, BookOpen, BrainCircuit } from "lucide-react";
+import { MessageSquare, Book, FileText, Heart, Brain, Sparkles, CheckCircle2, Sun, Moon, Globe, User, Bell, Sliders, Shield, Circle, ArrowRight, Info, Home, BookOpen, BrainCircuit, Bot, MessagesSquare } from "lucide-react";
 import { SUGGESTED_CHATBOT_PROMPTS } from "./chatbot-prompts";
 import { AI_TOOLS } from "./ai-tools";
 
@@ -435,14 +435,14 @@ export const aiToolSidebarCards = [
     {
         id: "suggestions",
         title: "Try Asking",
-        icon: MessageSquare,
+        icon: MessagesSquare,
         description: null,
         promptList: SUGGESTED_CHATBOT_PROMPTS,
     },
     {
         id: "tools",
         title: "Specialized AI Tools",
-        icon: Sparkles,
+        icon: Brain,
         description:
             "For more in-depth, specialized guidance, try our dedicated AI tools:",
         toolList: AI_TOOLS,
