@@ -21,7 +21,7 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" className="light">
-            <body className={`${inter.className} bg-gray-50`}>
+            <body className={`${inter.className} bg-gray-50 w-full h-full`}>
                 <div className="flex min-h-screen">
                     {/* Sidebar - hidden on mobile */}
                     <div className="hidden md:block">

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import {
     ArrowUpRight,
@@ -14,11 +14,8 @@ import {
     TrendingUp,
     Heart,
 } from "lucide-react";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/client";
-import { AI_TOOLS } from "@/constants/ai-tools";
-import { Progress } from "@/components/ui/progress";
 
 // Simplified dashboard components
 const WelcomeCard = ({ name = "User" }) => {
@@ -384,7 +381,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-center min-h-[60vh]">
                 <div className="text-center">
                     <div className="w-12 h-12 border-4 border-teal-200 border-t-teal-500 rounded-full animate-spin mx-auto"></div>
-                    <p className="mt-4 text-gray-500">
+                    <p className="mt-4 text-lg text-gray-500 font-semibold">
                         Loading your dashboard...
                     </p>
                 </div>

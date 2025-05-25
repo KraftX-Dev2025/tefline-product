@@ -69,22 +69,63 @@
 }
 
 /* Custom utilities */
-@utility gradient-text {
-    color: transparent;
-    background-clip: text;
-    background-image: linear-gradient(
-        to right,
-        var(--color-primary-start),
-        var(--color-primary-end)
-    );
-}
+@layer utilities {
+    .gradient-text {
+        background: linear-gradient(
+            to right,
+            var(--color-primary-start),
+            var(--color-primary-end)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+    }
 
-@utility gradient-bg {
-    background-image: linear-gradient(
-        to right,
-        var(--color-primary-start),
-        var(--color-primary-end)
-    );
+    .text-gradient {
+        background: linear-gradient(
+            135deg,
+            var(--color-primary-start) 0%,
+            var(--color-primary-end) 100%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+    }
+
+    .gradient-bg {
+        background: linear-gradient(
+            to right,
+            var(--color-primary-start),
+            var(--color-primary-end)
+        );
+    }
+
+    /* Alternative gradient directions */
+    .text-gradient-vertical {
+        background: linear-gradient(
+            to bottom,
+            var(--color-primary-start),
+            var(--color-primary-end)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+    }
+
+    .text-gradient-diagonal {
+        background: linear-gradient(
+            45deg,
+            var(--color-primary-start),
+            var(--color-primary-end)
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        color: transparent;
+    }
 }
 
 @utility task-card {

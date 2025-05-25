@@ -7,7 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 
 export default function LoginForm() {
     const router = useRouter();
@@ -97,7 +97,7 @@ export default function LoginForm() {
             <Button
                 type="button"
                 variant="outline"
-                className="w-full font-bold flex items-center justify-center h-12"
+                className="w-full font-bold flex items-center text-teal-600 hover:bg-teal-600 hover:text-white justify-center h-12"
                 onClick={handleGoogleSignIn}
                 disabled={googleLoading}
             >
@@ -130,8 +130,8 @@ export default function LoginForm() {
 
             <div className="relative flex items-center justify-center">
                 <div className="border-t border-gray-200 w-full"></div>
-                <div className="bg-white px-3 text-xs text-gray-500 absolute">
-                    OR LOGIN WITH EMAIL
+                <div className="px-3 text-xs font-bold absolute">
+                    or Login with Email
                 </div>
             </div>
 
@@ -171,28 +171,30 @@ export default function LoginForm() {
                     className="bg-white border-gray-200 h-12 text-black"
                 />
             </div>
-
-            <Button
-                type="submit"
-                className="w-full bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-500 hover:to-teal-700 text-white font-bold h-12"
-                disabled={loading}
-            >
-                {loading ? (
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                ) : (
-                    <>
-                        Sign In <ArrowRight className="ml-2 h-5 w-5" />
-                    </>
-                )}
-            </Button>
-
-            <div className="text-center text-sm">
-                <span className="text-gray-600">Don't have an account?</span>{" "}
+            <div className="flex justify-center items-center">
+                <Button
+                    type="submit"
+                    variant="gradient"
+                    className="w-auto px-8 hover:from-teal-500 hover:to-teal-700 text-white font-bold h-12"
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                    ) : (
+                        <>
+                            Sign In <ArrowRight className="ml-2 h-5 w-5" />
+                        </>
+                    )}
+                </Button>
+            </div>
+            <div className="text-center flex gap-2 items-center justify-center text-sm">
+                <div className="text-teal-600">Don't have an account ?</div>{" "}
                 <Link
                     href="/register"
-                    className="text-teal-600 hover:underline font-medium"
+                    className="text-teal-600 flex items-center justify-center hover:underline font-medium"
                 >
-                    Sign up
+                    <div>Sign up</div>
+                    <div> <ChevronRight className="h-5 w-5 ml-0.5" /></div>
                 </Link>
             </div>
         </form>

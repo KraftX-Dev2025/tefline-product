@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion } from "framer-motion";
-import { Menu, Bell, User } from "lucide-react";
+import { Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -24,7 +23,7 @@ export default function Header({
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [notifications, setNotifications] = useState(2); // Example notification count
+    const [notifications, setNotifications] = useState(2);
 
     useEffect(() => {
         const checkAuthStatus = async () => {
@@ -87,7 +86,7 @@ export default function Header({
     return (
         <header
             className={cn(
-                "sticky top-0 left-0 right-0 z-40 transition-all duration-300",
+                "sticky top-0 left-0 right-0 transition-all z-20 duration-300",
                 isScrolled
                     ? "bg-white/90 backdrop-blur-lg shadow-sm"
                     : "bg-white"
@@ -107,7 +106,7 @@ export default function Header({
                         </Button>
                     )} */}
 
-                    <Link href="/" className="flex items-center md:hidden">
+                    <Link href="/" className="flex gap-4 items-center">
                         <div className="w-8 h-8 flex items-center justify-center">
                             <Image
                                 src="/favicon.png"
@@ -116,20 +115,23 @@ export default function Header({
                                 height={32}
                             />
                         </div>
+                        <div className="text-xl font-semibold gradient-text ml-2">
+                            Tefline
+                        </div>
                     </Link>
 
                     {/* Page title for desktop */}
-                    <h1 className="text-xl font-semibold text-gray-800 ml-2 hidden md:block">
+                    {/* <h1 className="text-xl font-semibold gradient-text ml-2 hidden md:block">
                         {getPageTitle()}
-                    </h1>
+                    </h1> */}
                 </div>
 
                 {/* Center - Page title for mobile */}
-                <div className="md:hidden">
-                    <h1 className="text-lg font-medium text-gray-800">
+                {/* <div className="md:hidden">
+                    <h1 className="text-lg font-medium gradient-text">
                         {getPageTitle()}
                     </h1>
-                </div>
+                </div> */}
 
                 {/* Right section - Actions & user */}
                 {!loading && (
@@ -169,10 +171,10 @@ export default function Header({
                                                         : "gradient"
                                                 }
                                                 size="sm"
-                                                className={
-                                                    link.name === "Register"
-                                                        ? "font-bold"
-                                                        : ""
+                                                className={`font-bold
+                                                    ${link.name === "Register"
+                                                        ? ""
+                                                        : "text-gradient border-0 hover:border-2"}`
                                                 }
                                             >
                                                 {link.name}

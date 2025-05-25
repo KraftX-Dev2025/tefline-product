@@ -7,9 +7,9 @@ import LoginForm from "@/components/auth/login-form";
 import { loginAppBenefits, loginIcons } from "@/constants/resources";
 
 // Visual wellness illustration components
-const WellnessVisual = () => {
+export const WellnessVisual = () => {
     return (
-        <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-1/2 bg-gradient-to-br from-teal-400/10 via-teal-500/10 to-teal-600/20 overflow-hidden">
+        <div className="block absolute right-0 top-0 bottom-0 w-1/2 h-full bg-teal-100 overflow-hidden">
             <div className="absolute top-20 right-20 w-64 h-64 bg-teal-300/20 rounded-full filter blur-3xl"></div>
             <div className="absolute bottom-20 left-20 w-80 h-80 bg-blue-300/10 rounded-full filter blur-3xl"></div>
             <div className="absolute inset-0">
@@ -101,7 +101,7 @@ export default function LoginPage() {
         setIsMounted(true);
     }, []);
     return (
-        <div className="min-h-screen flex items-stretch relative overflow-hidden bg-white">
+        <div className="flex items-stretch overflow-hidden w-full h-full bg-white">
             {/* Left side - Login form */}
             <div className="flex-1 flex items-center justify-center p-4 md:p-8 relative z-10">
                 <div className="max-w-md w-full">
@@ -111,12 +111,12 @@ export default function LoginPage() {
                         transition={{ duration: 0.5 }}
                         className="text-center mb-8"
                     >
-                        <div className="inline-flex items-center bg-teal-50 px-3 py-1 rounded-full text-sm font-medium text-teal-600 mb-4">
+                        <div className="inline-flex items-center bg-teal-50 px-3 py-1 rounded-full gap-2 text-sm font-medium text-teal-600 mb-4">
                             <Sparkles size={14} className="mr-1" />
                             Secure Login
                         </div>
 
-                        <h1 className="text-3xl font-bold text-teal-600 mb-2">
+                        <h1 className="text-3xl font-bold text-gradient mb-2">
                             Welcome to Tefline
                         </h1>
                         <p className="text-gray-500">

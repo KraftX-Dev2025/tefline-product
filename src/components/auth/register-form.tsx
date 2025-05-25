@@ -120,7 +120,7 @@ export default function RegisterForm() {
             <Button
                 type="button"
                 variant="outline"
-                className="w-full font-bold flex items-center justify-center h-12"
+                className="w-full font-bold flex items-center text-teal-600 hover:bg-teal-600 hover:text-white justify-center h-12"
                 onClick={handleGoogleSignUp}
                 disabled={googleLoading}
             >
@@ -204,21 +204,22 @@ export default function RegisterForm() {
                     Must be at least 6 characters
                 </p>
             </div>
-
-            <Button
-                type="submit"
-                className="w-full bg-gradient-to-r from-teal-400 to-teal-600 hover:from-teal-500 hover:to-teal-700 text-white font-bold h-12"
-                disabled={loading}
-            >
-                {loading ? (
-                    <Loader2 className="h-5 w-5 animate-spin mr-2" />
-                ) : (
-                    <>
-                        Create Account <ArrowRight className="ml-2 h-5 w-5" />
-                    </>
-                )}
-            </Button>
-
+            <div className="flex justify-center items-center">
+                <Button
+                    type="submit"
+                    variant="gradient"
+                    className="w-auto px-8 hover:from-teal-500 hover:to-teal-700 text-white font-bold h-12"
+                    disabled={loading}
+                >
+                    {loading ? (
+                        <Loader2 className="h-5 w-5 animate-spin mr-2" />
+                    ) : (
+                        <>
+                            Create Account <ArrowRight className="ml-2 h-5 w-5" />
+                        </>
+                    )}
+                </Button>
+            </div>
             {/* <div className="text-center text-sm">
                 <span className="text-gray-600">Already have an account?</span>{" "}
                 <Link
