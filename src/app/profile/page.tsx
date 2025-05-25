@@ -46,7 +46,7 @@ export default function ProfilePage() {
         };
 
         getUserData();
-    }, []);
+    }, [supabase.auth]); // Added supabase.auth to dependency array
 
     async function handleLogout(e: React.MouseEvent<HTMLButtonElement>): Promise<void> {
         e.preventDefault();
@@ -90,7 +90,7 @@ export default function ProfilePage() {
                     </div>
 
                     <Button variant="outline" className="border-red-400 text-red-400 hover:bg-red-400 hover:text-white hover:border-none" onClick={handleLogout}>
-                        Logout 
+                        Logout
                     </Button>
                 </div>
 
