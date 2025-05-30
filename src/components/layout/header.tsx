@@ -106,7 +106,7 @@ export default function Header({
                         </Button>
                     )} */}
 
-                    <Link href="/" className="flex gap-4 items-center">
+                    <Link href="/" className="flex gap-4 items-center md:hidden">
                         <div className="w-8 h-8 flex items-center justify-center">
                             <Image
                                 src="/favicon.png"
