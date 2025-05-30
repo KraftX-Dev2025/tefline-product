@@ -7,7 +7,7 @@ import { createClient } from "@/utils/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowRight, Loader2 } from "lucide-react";
+import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 
 export default function RegisterForm() {
     const router = useRouter();
@@ -94,7 +94,9 @@ export default function RegisterForm() {
 
             if (error) throw error;
         } catch (error: any) {
-            setError(error.message || "An error occurred during Google sign up");
+            setError(
+                error.message || "An error occurred during Google sign up"
+            );
             setGoogleLoading(false);
         }
     };
@@ -117,6 +119,7 @@ export default function RegisterForm() {
                 </div>
             )}
 
+            {/* Google Sign Up Button - Above email/password fields */}
             <Button
                 type="button"
                 variant="outline"
@@ -153,8 +156,8 @@ export default function RegisterForm() {
 
             <div className="relative flex items-center justify-center">
                 <div className="border-t border-gray-200 w-full"></div>
-                <div className="bg-white px-3 text-xs text-gray-500 absolute">
-                    OR REGISTER WITH EMAIL
+                <div className="px-3 text-xs font-bold absolute">
+                    or Register with Email
                 </div>
             </div>
 
@@ -168,7 +171,7 @@ export default function RegisterForm() {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="John Doe"
                     required
-                    className="bg-white border-gray-200 h-12"
+                    className="bg-white border-gray-200 h-12 text-black"
                 />
             </div>
 
@@ -204,6 +207,7 @@ export default function RegisterForm() {
                     Must be at least 6 characters
                 </p>
             </div>
+
             <div className="flex justify-center items-center">
                 <Button
                     type="submit"
@@ -215,20 +219,25 @@ export default function RegisterForm() {
                         <Loader2 className="h-5 w-5 animate-spin mr-2" />
                     ) : (
                         <>
-                            Create Account <ArrowRight className="ml-2 h-5 w-5" />
+                            Create Account{" "}
+                            <ArrowRight className="ml-2 h-5 w-5" />
                         </>
                     )}
                 </Button>
             </div>
-            {/* <div className="text-center text-sm">
-                <span className="text-gray-600">Already have an account?</span>{" "}
+
+            <div className="text-center flex gap-2 items-center justify-center text-sm">
+                <div className="text-teal-600">Already have an account?</div>
                 <Link
                     href="/login"
-                    className="text-teal-600 hover:underline font-medium"
+                    className="text-teal-600 flex items-center justify-center hover:underline font-medium"
                 >
-                    Sign in
+                    <div>Sign in</div>
+                    <div>
+                        <ChevronRight className="h-5 w-5 ml-0.5" />
+                    </div>
                 </Link>
-            </div> */}
+            </div>
         </form>
     );
 }

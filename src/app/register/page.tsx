@@ -1,134 +1,46 @@
 "use client";
 
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Sparkles } from "lucide-react";
 import RegisterForm from "@/components/auth/register-form";
-import {
-    Heart,
-    Brain,
-    Sparkles,
-    CheckCircle2,
-    ChevronRight,
-} from "lucide-react";
-import { registerFeatures, registerStats } from "@/constants/resources";
-
-// Feature blocks component - simpler design
-const FeatureBlocks = () => {
-    return (
-        <div className="flex flex-col gap-4">
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mx-auto">
-                {registerFeatures.map((feature, index) => (
-                    <motion.div
-                        key={index}
-                        className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-teal-200/20 flex items-center"
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.3 + index * 0.1 }}
-                    >
-                        <div className="bg-white/10 p-1.5 rounded-md mr-2 text-teal-400">
-                            <feature.icon size={16} />
-                        </div>
-                        <p className="text-white text-xs md:text-sm  font-medium">
-                            {feature.title}
-                        </p>
-                    </motion.div>
-                ))}
-            </div>
-            {/* <div className="mb-8">
-                <motion.div
-                    className="grid grid-cols-3 gap-3"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                >
-                    {registerStats.map((stat, i) => (
-                        <div
-                            key={i}
-                            className="bg-teal-50 border border-teal-100 rounded-lg p-3 text-center"
-                        >
-                            <p className="text-lg sm:text-xl font-bold text-teal-600">
-                                {stat.value}
-                            </p>
-                            <p className="text-[0.65rem] text-center text-teal-700">
-                                {stat.label}
-                            </p>
-                        </div>
-                    ))}
-                </motion.div>
-            </div> */}
-        </div>
-    );
-};
+import { WellnessVisual } from "@/components/auth/wellness-visual";
 
 export default function RegisterPage() {
     const [isMounted, setIsMounted] = useState(false);
 
-    // Ensure animations only run after component has mounted (client-side)
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
     return (
-        <div className="flex flex-col min-h-screen rounded-xl">
-            {/* Top section with gradient background */}
-            <div className="py-4 sm:py-10 px-4 md:px-8 bg-gradient-to-b from-teal-600 to-teal-700 text-white rounded-xl">
-                <div className="container mx-auto max-w-4xl">
+        <div className="flex items-stretch overflow-hidden w-full h-full bg-white">
+            {/* Left side - Registration form */}
+            <div className="flex-1 flex items-center justify-center p-4 md:p-8 relative z-10">
+                <div className="max-w-md w-full">
                     <motion.div
-                        className="text-center mb-8"
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={isMounted ? { opacity: 1, y: 0 } : {}}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
+                        className="text-center mb-8"
                     >
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3">
+                        <div className="inline-flex items-center bg-teal-50 px-3 py-1 rounded-full gap-2 text-sm font-medium text-teal-600 mb-4">
+                            <Sparkles size={14} className="mr-1" />
+                            Join Tefline
+                        </div>
+
+                        <h1 className="text-3xl font-bold text-gradient mb-2">
                             Create Your Account
                         </h1>
-                        <p className="text-teal-100 text-xs md:text-base mx-auto">
-                            Join the wellness intelligence revolution and begin
-                            your journey to optimized health
+                        <p className="text-gray-500">
+                            Join the wellness intelligence platform
                         </p>
                     </motion.div>
-
-                    {/* Feature blocks - subtle animation */}
-                    {isMounted && <FeatureBlocks />}
+                    <RegisterForm />
                 </div>
             </div>
-
-            {/* Form section */}
-            <div className="flex-grow py-12 px-4 md:px-8 bg-gradient-to-b from-teal-50 via-white to-teal-50">
-                <div className="container mx-auto">
-                    <div className="max-w-md mx-auto">
-                        {/* Metrics row - subtle animation */}
-                        {/* Form component */}
-                        <Suspense fallback={<div>Loading...</div>}>
-                            <RegisterForm />
-                        </Suspense>
-
-                        {/* Bottom helper text */}
-                        {isMounted && (
-                            <motion.div
-                                className="mt-8 text-center text-sm text-teal-600 flex items-center justify-center"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.5 }}
-                            >
-                                <span>Already have an account?</span>
-                                <motion.div
-                                    whileHover={{ x: 3 }}
-                                    className="inline-flex items-center ml-2 font-medium"
-                                >
-                                    <a
-                                        href="/login"
-                                        className="hover:underline"
-                                    >
-                                        Sign in
-                                    </a>
-                                    <ChevronRight className="h-4 w-4 ml-0.5" />
-                                </motion.div>
-                            </motion.div>
-                        )}
-                    </div>
-                </div>
-            </div>
+            {/* Right side - Visual illustration */}
+            {isMounted && <WellnessVisual />}
         </div>
     );
 }
