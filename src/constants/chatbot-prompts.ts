@@ -1,6 +1,6 @@
 // N8N webhook URL for the chatbot
 export const N8N_WEBHOOK_URL =
-    "https://n8n.srv850966.hstgr.cloud/webhook-test/84f66fe4-4469-41e7-9569-da2430a379dc";
+    "https://n8n.srv850966.hstgr.cloud/webhook/84f66fe4-4469-41e7-9569-da2430a379dc";
 
 // System message that defines the chatbot's purpose and capabilities
 export const CHATBOT_SYSTEM_MESSAGE = `
